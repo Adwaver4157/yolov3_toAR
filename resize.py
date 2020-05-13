@@ -19,7 +19,6 @@ img_num = 1
 class_num = 0
 
 for c in classes:
-    class_num += 1
 
     #class_nameへの書き込み(クラス名)
     class_name.write(c.split("/")[1])
@@ -73,6 +72,7 @@ for c in classes:
         train.write("\n")
 
         img_num += 1
+    class_num += 1
     if class_num == class_num_limit:
         break
 train.close()
