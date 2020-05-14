@@ -11,33 +11,25 @@ yolov3_toAR/
   ┝ kears-yolov3
   ┝ Images
   |   ┝ class01 <-クラス名はなんでもいい
-  |   |   ┝ class01.txt
+  |   |   ┝ class01.txt <- クラス内のimgの総数や、更新情報
   |   |   ┝ img1.jpg
   |   |   ...
   |   |   └ img1000.jpg
-  |   ┝ class02 <-クラス名はなんでもいい
+  |   ┝ class02
   |   |   ┝ class02.txt
   |   |   ┝ img1.jpg
   |   |   ...
   |   |   └ img1000.jpg
+  |   ...
+  |
   ┝ Annotation
-  |   ┝ ch01 <- 担当チャプター
-  |   |   ┝ input <- 入力画像
-  |   |   |   ┝ imori.jpg
-  |   |   |   ┝ imori_noise.jpg
-  |   |   |   ...
-  |   |   |
-  |   |   ┝ solution <- ソースコード
-  |   |   |   ┝ solution01.py
-  |   |   |   ┝ solution02.py
-  |   |   |   ...
-  |   |   |
-  |   |   ┝ answer <- 出力画像(答え)
-  |   |   |   ┝ answer01.jpg
-  |   |   |   ┝ answer02.jpg
-  |   |   |   ...
-  |   |   |   
-  |   |   └ supplement <- 補足資料(必要であれば)
-
+  |   ┝ class01 <-Images内のディレクトリに対応する名前
+  |   |   ┝ img1.txt <- Images内の同名画像のannotation(書式は下)
+  |   |   ...
+  |   |   └ img1000.txt
+  |   ┝ class02
+  |   |   ┝ img1.txt
+  |   |   ...
+  |   |   └ img1000.txt
   |   ...
 ```
