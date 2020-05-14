@@ -20,24 +20,16 @@ yolov3_toAR/
   |   |   ┝ img1.jpg
   |   |   ...
   |   |   └ img1000.jpg
+  |   ...
+  |
   ┝ Annotation
-  |   ┝ ch01 <- 担当チャプター
-  |   |   ┝ input <- 入力画像
-  |   |   |   ┝ imori.jpg
-  |   |   |   ┝ imori_noise.jpg
-  |   |   |   ...
-  |   |   |
-  |   |   ┝ solution <- ソースコード
-  |   |   |   ┝ solution01.py
-  |   |   |   ┝ solution02.py
-  |   |   |   ...
-  |   |   |
-  |   |   ┝ answer <- 出力画像(答え)
-  |   |   |   ┝ answer01.jpg
-  |   |   |   ┝ answer02.jpg
-  |   |   |   ...
-  |   |   |   
-  |   |   └ supplement <- 補足資料(必要であれば)
-
+  |   ┝ class01 <-クラス名はなんでもいい
+  |   |   ┝ img1.txt
+  |   |   ...
+  |   |   └ img1000.txt
+  |   ┝ class02 <-クラス名はなんでもいい
+  |   |   ┝ img1.txt
+  |   |   ...
+  |   |   └ img1000.txt
   |   ...
 ```
