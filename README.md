@@ -15,7 +15,7 @@ yolov3_toAR/
   ┝ class_name.txt 　 ├  この三つはresize.pyで作られる
   ┝ train.txt       　┘
   |
-  ┝ manage_data.py <- ImagesとAnnotationを作成する
+  ┝ manage_data.py <- ImagesとAnnotationを作成してくれる
   |
   ┝ Images
   |   ┝ class01 <-クラス名はなんでもいい
