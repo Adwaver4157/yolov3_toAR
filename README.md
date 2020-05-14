@@ -8,14 +8,19 @@ https://colab.research.google.com/drive/1pi7Iskwi2G_nYMithtQFPoyqWzQ6BFmp?usp=sh
 ```
 yolov3_toAR/
   ┝ README.md
-  ┝ TsukichiShibuya
-  |   ┝ ch01 <- 担当チャプター
-  |   |   ┝ input <- 入力画像
-  |   |   |   ┝ imori.jpg
-  |   |   |   ┝ imori_noise.jpg
-  |   |   |   ...
-  |   |   |
-  ┝ TsukichiShibuya
+  ┝ kears-yolov3
+  ┝ Images
+  |   ┝ class01 <-クラス名はなんでもいい
+  |   |   ┝ class01.txt
+  |   |   ┝ img1.jpg
+  |   |   ...
+  |   |   └ img1000.jpg
+  |   ┝ class02 <-クラス名はなんでもいい
+  |   |   ┝ class02.txt
+  |   |   ┝ img1.jpg
+  |   |   ...
+  |   |   └ img1000.jpg
+  ┝ Annotation
   |   ┝ ch01 <- 担当チャプター
   |   |   ┝ input <- 入力画像
   |   |   |   ┝ imori.jpg
@@ -33,11 +38,6 @@ yolov3_toAR/
   |   |   |   ...
   |   |   |   
   |   |   └ supplement <- 補足資料(必要であれば)
-  |   |       ┝ image.png
-  |   |       ┝ algo.java
-  |   |       ┝ slide.pdf
-  |   |       ...
-  |   |  
-  |   ┝ ch05 <- 担当チャプター
+
   |   ...
 ```
