@@ -4,7 +4,7 @@
 https://colab.research.google.com/drive/1pi7Iskwi2G_nYMithtQFPoyqWzQ6BFmp?usp=sharing
 
 
-# ディレクトリ構成
+## ディレクトリ構成
 ```
 yolov3_toAR/
   |
@@ -42,7 +42,7 @@ yolov3_toAR/
       |   └ img1000.txt
       ...
 ```
-## annotationの書式
+### annotationの書式
 ```
 x_min,y_min,x_max,y_max
 ```
