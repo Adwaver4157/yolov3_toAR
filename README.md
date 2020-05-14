@@ -7,6 +7,7 @@ https://colab.research.google.com/drive/1pi7Iskwi2G_nYMithtQFPoyqWzQ6BFmp?usp=sh
 # ディレクトリ構成
 ```
 yolov3_toAR/
+  |
   ┝ README.md
   ┝ kears-yolov3
   |
