@@ -9,9 +9,15 @@ https://colab.research.google.com/drive/1pi7Iskwi2G_nYMithtQFPoyqWzQ6BFmp?usp=sh
 yolov3_toAR/
   ┝ README.md
   ┝ kears-yolov3
+  |
+  ┝ resize.py
+  ┝ datasets      　  ┐
+  ┝ class_name.txt 　 ├  この三つはresize.pyで作られる
+  ┝ train.txt       　┘
+  |
   ┝ Images
   |   ┝ class01 <-クラス名はなんでもいい
-  |   |   ┝ class01.txt <- クラス内のimgの総数や、更新情報
+  |   |   ┝ class01.txt <- クラス内の画像の総数や、更新情報
   |   |   ┝ img1.jpg
   |   |   ...
   |   |   └ img1000.jpg
