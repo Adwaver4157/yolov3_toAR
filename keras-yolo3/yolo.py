@@ -60,7 +60,7 @@ class YOLO(object):
         return np.array(anchors).reshape(-1, 2)
 
     def generate(self):
-        model_path = self.model_path
+        model_path = os.path.expanduser(self.model_path)
 
         # Load model, or construct model and load weights.
         num_anchors = len(self.anchors)
