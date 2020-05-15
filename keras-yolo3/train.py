@@ -37,7 +37,7 @@ def _main():
     #                             monitor='val_loss', save_weights_only=True, save_best_only=True, period=3)
     path = os.getcwd()
     os.chdir('/content/drive/My Drive/data/')
-    store_path = os.path.join(os.getcwd(), 'yolov3_prog.hdf5')
+    store_path = os.path.join(os.getcwd(), 'yolov3_prog.h5')
     model.save_weights(store_path)
     os.chdir(path)
     checkpoint = ModelCheckpoint(store_path,
@@ -104,7 +104,7 @@ def _main():
 
     path = os.getcwd()
     os.chdir('/content/drive/My Drive/data/')
-    store_path = os.path.join(os.getcwd(), 'yolov3_final.hdf5')
+    store_path = os.path.join(os.getcwd(), 'yolov3_final.h5')
     #json_string = model.to_json()
     #open(os.path.join(store_path, 'yolov3_model.json'), 'w').write(json_string)
     #yaml_string = model.to_yaml()
