@@ -4,17 +4,28 @@ import os
 
 def make_image():
     class_name = input("enter the class you want to make -> ")
+    class_image_path = "Images/"+class_name
+    class_annotation_path = "Annotation/"+class_name
     cap = cv2.VideoCapture(1)  # カメラ番号は多分0か1
     if cap.isOpened():
         print("your camera successfully opened")
         print("make "+class_name)
+
+        if not os.path.exists(class_image_path):
+            os.makedirs(class_image_path)
+            os.makedirs(class_annotation_path)
+            class_text = open(class_image_path+"/"+class_name+".txt", 'a+')
+            class_text.write("0\n")
+        else:
+            class_text = open(class_image_path+"/"+class_name+".txt", 'a+')
+        class_text.seek(0)
+        class_text_array = class_text.readlines()
+        size = int(class_text_array[0])
+
         while True:
             _, frame = cap.read()
             cv2.imshow("window", frame)
             
-
-
-
 
 
 
