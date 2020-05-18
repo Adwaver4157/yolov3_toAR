@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 import os
+import datetime
 
 def make_image():
     class_name = input("enter the class you want to make -> ")
@@ -11,27 +12,45 @@ def make_image():
         print("your camera successfully opened")
         print("make "+class_name)
 
+        #ディレクトリの存在確認
         if not os.path.exists(class_image_path):
             os.makedirs(class_image_path)
             os.makedirs(class_annotation_path)
-            class_text = open(class_image_path+"/"+class_name+".txt", 'a+')
-            class_text.write("0\n")
-        else:
-            class_text = open(class_image_path+"/"+class_name+".txt", 'a+')
-        class_text.seek(0)
-        class_text_array = class_text.readlines()
-        size = int(class_text_array[0])
+        class_text = open(class_image_path+"/"+class_name+".txt", 'a+')
+        size = len(os.listdir(class_image_path))-1
+        size2 = size
 
         while True:
             _, frame = cap.read()
             cv2.imshow("window", frame)
-            
 
+            #未完成
 
+            #書き出し
+            size2 += 1
+            cv2.imwrite(class_image_path+"/img"+str(size2)+".jpg", frame)
+            with open(class_annotation_path+"/img"+str(size2)+".txt", "w") as f:
+                f.write(str(0))
+                f.write(",")
+                f.write(str(0))
+                f.write(",")
+                f.write(str(0))
+                f.write(",")
+                f.write(str(0))
+                f.write("\n")
 
-
-            key = cv2.waitKey(1)
+            key = cv2.waitKey(20)
             if key == ord('q'):
+                #更新内容を追加
+                class_text.write("更新時刻:")
+                class_text.write(str(datetime.datetime.now()))
+                class_text.write(" 更新内容:")
+                class_text.write(str(size+1))
+                class_text.write("から")
+                class_text.write(str(size2))
+                class_text.write("を追加\n")
+                class_text.close()
+
                 cv2.destroyWindow("window")
                 break
         cap.release()
