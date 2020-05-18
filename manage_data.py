@@ -20,26 +20,32 @@ def make_image():
         size = len(os.listdir(class_image_path))-1
         size2 = size
 
+
+        a, b = 25, 5 # aは描画するフレーム数、bは記録するフレーム数 (gcd(a,b)=b)
+        c = 1
         while True:
             _, frame = cap.read()
             cv2.imshow("window", frame)
 
-            #未完成
+            if c%(a//b) == 0:
+                #未完成
 
-            #書き出し
-            size2 += 1
-            cv2.imwrite(class_image_path+"/img"+str(size2)+".jpg", frame)
-            with open(class_annotation_path+"/img"+str(size2)+".txt", "w") as f:
-                f.write(str(0))
-                f.write(",")
-                f.write(str(0))
-                f.write(",")
-                f.write(str(0))
-                f.write(",")
-                f.write(str(0))
-                f.write("\n")
+                #書き出し
+                size2 += 1
+                cv2.imwrite(class_image_path+"/img"+str(size2)+".jpg", frame)
+                with open(class_annotation_path+"/img"+str(size2)+".txt", "w") as f:
+                    f.write(str(0))
+                    f.write(",")
+                    f.write(str(0))
+                    f.write(",")
+                    f.write(str(0))
+                    f.write(",")
+                    f.write(str(0))
+                    f.write("\n")
 
-            key = cv2.waitKey(20)
+            c += 1
+
+            key = cv2.waitKey(1000//a)
             if key == ord('q'):
                 #更新内容を追加
                 class_text.write("更新時刻:")
