@@ -28,7 +28,10 @@ def make_image():
             cv2.imshow("window", frame)
 
             if c%(a//b) == 0:
+
+                #
                 #未完成
+                #
 
                 #書き出し
                 size2 += 1
@@ -42,7 +45,6 @@ def make_image():
                     f.write(",")
                     f.write(str(0))
                     f.write("\n")
-
             c += 1
 
             key = cv2.waitKey(1000//a)
