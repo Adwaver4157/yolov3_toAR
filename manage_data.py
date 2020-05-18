@@ -1,15 +1,24 @@
 import numpy as np
 import cv2
+import os
 
 def make_image():
     class_name = input("enter the class you want to make -> ")
     cap = cv2.VideoCapture(1)  # カメラ番号は多分0か1
     if cap.isOpened():
-        print("successfully opened")
+        print("your camera successfully opened")
         print("make "+class_name)
         while True:
             _, frame = cap.read()
             cv2.imshow("window", frame)
+            
+
+
+
+
+
+
+
             key = cv2.waitKey(1)
             if key == ord('q'):
                 cv2.destroyWindow("window")
@@ -26,7 +35,7 @@ def make_image():
         return
 
 def delete_image():
-    print(2)
+    print("作り途中")
 
 def save_image(c, img):
     pass
