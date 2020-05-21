@@ -10,7 +10,7 @@ def make_image():
     class_annotation_path = "Annotation/"+class_name
     cap = cv2.VideoCapture(1)  # カメラ番号は多分0か1
     if cap.isOpened():
-        print("your camera successfully opened")
+        print("successfully opened")
         print("make "+class_name)
 
         #ディレクトリの存在確認
@@ -75,6 +75,7 @@ def make_image():
 
             #画面の更新
             _, frame = cap.read()
+            frame = cv2.flip(frame, 1)
             frame_copy = frame.copy()
             if takeSS_flag:
                 cv2.rectangle(frame_copy, (xmin, ymin), (xmax, ymax), (0, 0, 255))
