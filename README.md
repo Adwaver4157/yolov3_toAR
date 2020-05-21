@@ -20,12 +20,10 @@ yolov3_toAR/
   |
   ┝ Images
   |   ┝ class01 <-クラス名はなんでもいい
-  |   |   ┝ class01.txt <- クラス内の画像の総数や、更新情報
   |   |   ┝ img1.jpg
   |   |   ...
   |   |   └ img1000.jpg
   |   ┝ class02
-  |   |   ┝ class02.txt
   |   |   ┝ img1.jpg
   |   |   ...
   |   |   └ img1000.jpg
@@ -33,10 +31,12 @@ yolov3_toAR/
   |
   └ Annotation
       ┝ class01 <-Images内のディレクトリに対応する名前
+      |   ┝ class01.txt <- クラス内の画像の総数や、更新情報
       |   ┝ img1.txt <- Images内の同名画像のannotation(書式は下)
       |   ...
       |   └ img1000.txt
       ┝ class02
+      |   ┝ class02.txt
       |   ┝ img1.txt
       |   ...
       |   └ img1000.txt
