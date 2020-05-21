@@ -17,14 +17,14 @@ def make_image():
         if not os.path.exists(class_image_path):
             os.makedirs(class_image_path)
             os.makedirs(class_annotation_path)
-        class_text = open(class_image_path+"/"+class_name+".txt", 'a+')
-        size = len(os.listdir(class_image_path))-1
+        class_text = open(class_annotation_path+"/"+class_name+".txt", 'a+')
+        size = len(os.listdir(class_image_path))
         size2 = size
 
         _, frame = cap.read()
         h = frame.shape[0]
         w = frame.shape[1]
-        xmin, ymin, xmax, ymax = 0, 0, 400, 400
+        xmin, ymin, xmax, ymax = w//2-200, h//2-200, w//2+200, h//2+200
 
         takeSS = 10  # 10*x[ms]に一回更新
         takeSS_flag = False
