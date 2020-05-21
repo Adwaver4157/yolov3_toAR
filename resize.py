@@ -39,9 +39,10 @@ for c in classes:
             print(e)
             continue
 
-        text = open("Annotation/"+f_split[1]+"/"+f_split[2][:-4])
+        text = open("Annotation/"+f_split[1]+"/"+f_split[2][:-4]+".txt") #犬の時は.txtは不要
 
         #犬↓
+        """
         for i in range(18):
             text.readline()
         line = [0]*4
@@ -52,12 +53,13 @@ for c in classes:
             a = text.readline().strip()
         if "object" in a:  # 複数の犬がいるのは使わない
             continue
+        """
         #犬↑
         #普段使う方↓
-        """
+
         #trainへの書き込み(annotation)
         line = list(map(int, text.readline().split(",")))
-        """
+
         #普段使う方↑
         train.write("datasets/image" + str(img_num) + ".jpg ")
         train.write(str(int(line[0]*w)))
