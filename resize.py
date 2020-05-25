@@ -1,6 +1,7 @@
 """
 引数は size(横) size(縦) class_num
-例えば 640 320 10
+ex) 640 320 10
+または size(縦横同じ) class_num
 """
 
 import glob
@@ -9,12 +10,12 @@ from PIL import Image
 
 #Images内のクラスごとにdatasets,class_name.txt,train.txtを作る
 
-size_w = int(sys.argv[1])  # リサイズ後のサイズ
-size_h = int(sys.argv[2])  # リサイズ後のサイズ
+size_w = int(sys.argv[1])  # リサイズ後のサイズ(横)
+size_h = int(sys.argv[2]) if len(sys.argv) == 4 else size_w  # リサイズ後のサイズ(縦)
 if size_h%32 != 0 or size_h%32 != 0:
     print('サイズは32の倍数')
 else:
-    class_num_limit = int(sys.argv[3])  # Image内で使うクラス数（出てきた順に使う）
+    class_num_limit = int(sys.argv[-1])  # Image内で使うクラス数（出てきた順に使う）
     classes = glob.glob("Images/*")
     class_name = open("class_name.txt", "w")
     train = open("train.txt", "w")
