@@ -2,6 +2,7 @@
 引数は size(横) size(縦) class_num
 ex) 640 320 10
 または size(縦横同じ) class_num
+ex) 320 5
 """
 
 import glob
@@ -45,7 +46,7 @@ else:
                 continue
 
             #犬↓
-
+            '''
             text = open("Annotation/"+f_split[1]+"/"+f_split[2][:-4])
             for i in range(18):
                 text.readline()
@@ -57,14 +58,14 @@ else:
                 a = text.readline().strip()
             if "object" in a:  # 複数の犬がいるのは使わない
                 continue
-
+            '''
             #犬↑
             #普段使う方↓
-            '''
+            
             #trainへの書き込み(annotation)
             text = open("Annotation/"+f_split[1]+"/"+f_split[2][:-4]+'.txt')
             line = list(map(int, text.readline().split(",")))
-            '''
+            
             #普段使う方↑
 
             train.write("datasets/image" + str(img_num) + ".jpg ")

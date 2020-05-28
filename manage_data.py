@@ -18,7 +18,7 @@ def make_image():
             os.makedirs(class_image_path)
             os.makedirs(class_annotation_path)
         class_text = open(class_annotation_path+"/"+class_name+".txt", 'a+')
-        size = len(os.listdir(class_image_path))
+        size = len(os.listdir(class_image_path))+10000  # 初期値をずらしてコンフリクトを避ける
         size2 = size
 
         _, frame = cap.read()
@@ -26,7 +26,7 @@ def make_image():
         w = frame.shape[1]
         xmin, ymin, xmax, ymax = w//2-200, h//2-200, w//2+200, h//2+200
 
-        takeSS = 10  # 10*x[ms]に一回更新
+        takeSS = 2  # 10*x[ms]に一回更新
         takeSS_flag = False
         count = 0
 
@@ -57,19 +57,19 @@ def make_image():
                 ymin -= 3+r
                 xmax += 3+r
                 ymax += 3+r
-            elif key == ord('k'):
+            elif key == ord('x'):
                 takeSS_flag = not takeSS_flag
             elif key == ord('q'):
-                #更新内容を追加
-                class_text.write("更新時刻:")
-                class_text.write(str(datetime.datetime.now()))
-                class_text.write(" 更新内容:")
-                class_text.write(str(size+1))
-                class_text.write("から")
-                class_text.write(str(size2))
-                class_text.write("を追加\n")
-                class_text.close()
-
+                if size2 > size+1:
+                    #更新内容を追加
+                    class_text.write("更新時刻:")
+                    class_text.write(str(datetime.datetime.now()))
+                    class_text.write(" 更新内容:")
+                    class_text.write(str(size+1))
+                    class_text.write("から")
+                    class_text.write(str(size2))
+                    class_text.write("を追加\n")
+                    class_text.close()
                 cv2.destroyWindow("window")
                 break
 
@@ -81,6 +81,8 @@ def make_image():
                 cv2.rectangle(frame_copy, (xmin, ymin), (xmax, ymax), (0, 0, 255))
             else:
                 cv2.rectangle(frame_copy, (xmin, ymin), (xmax, ymax), (0, 255, 0))
+
+            cv2.putText(frame_copy, str(size2), (0, h//3), cv2.FONT_HERSHEY_SIMPLEX, 2.0, (0, 255, 0), thickness=2)
             cv2.imshow("window", frame_copy)
 
             #画面を保存
