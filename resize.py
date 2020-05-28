@@ -3,6 +3,7 @@
 ex) 640 320 10
 または size(縦横同じ) class_num
 ex) 320 5
+class_numに0を指定すれば、全てのクラスをリサイズする
 """
 
 import glob
