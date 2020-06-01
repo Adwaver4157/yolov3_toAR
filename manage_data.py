@@ -6,8 +6,8 @@ import random
 
 def make_image():
     class_name = input("enter the class you want to make -> ")
-    class_image_path = "Images/"+class_name
-    class_annotation_path = "Annotation/"+class_name
+    class_image_path = os.path.join("Images", class_name)
+    class_annotation_path = os.path.join("Annotation", class_name)
     cap = cv2.VideoCapture(1)  # カメラ番号は多分0か1
     if cap.isOpened():
         print("successfully opened")
@@ -17,8 +17,8 @@ def make_image():
         if not os.path.exists(class_image_path):
             os.makedirs(class_image_path)
             os.makedirs(class_annotation_path)
-        class_text = open(class_annotation_path+"/"+class_name+".txt", 'a+')
-        size = len(os.listdir(class_image_path))+10000  # 初期値をずらしてコンフリクトを避ける
+        class_text = open(os.path.join(class_annotation_path, class_name+".txt"), 'a+')
+        size = len(os.listdir(class_image_path))+0  # 初期値をずらしてコンフリクトを避ける
         size2 = size
 
         _, frame = cap.read()
@@ -82,15 +82,15 @@ def make_image():
             else:
                 cv2.rectangle(frame_copy, (xmin, ymin), (xmax, ymax), (0, 255, 0))
 
-            cv2.putText(frame_copy, str(size2), (0, h//3), cv2.FONT_HERSHEY_SIMPLEX, 2.0, (0, 255, 0), thickness=2)
+            cv2.putText(frame_copy, str(size2), (0, h//3), cv2.FONT_HERSHEY_SIMPLEX, 2.0, (0, 255, 0), thickness=2)  # 現在の枚数を描画
             cv2.imshow("window", frame_copy)
 
             #画面を保存
             if count%takeSS == 0 and takeSS_flag:
                 #書き出し
                 size2 += 1
-                cv2.imwrite(class_image_path+"/img"+str(size2)+".jpg", frame)
-                with open(class_annotation_path+"/img"+str(size2)+".txt", "w") as f:
+                cv2.imwrite(os.path.join(class_image_path, "img"+str(size2)+".jpg"), frame)
+                with open(os.path.join(class_annotation_path, "img"+str(size2)+".txt"), "w") as f:
                     f.write(str(xmin))
                     f.write(",")
                     f.write(str(ymin))
