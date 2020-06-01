@@ -1,54 +1,61 @@
 """
-引数は size(横) size(縦) class_num
-ex) 640 320 10
-または size(縦横同じ) class_num
-ex) 320 5
-class_numに0を指定すれば、全てのクラスをリサイズする
+Images, Annotation内にある画像をリサイズする
+
+** datasetsディレクトリがないときerrorとなる **
+
+Args:
+        Width: リサイズ後の横の長さ(32の倍数)
+        Height: リサイズ後の縦の長さ(32の倍数、Widthと同じ時省略できる)
+        Number of classess: 使用したいクラス数(0の時、全てのクラスを使う)
+        ex) resize.py 640 320 10
+
 """
 
 import glob
 import sys
+import os
 from PIL import Image
 
-#Images内のクラスごとにdatasets,class_name.txt,train.txtを作る
+width = int(sys.argv[1])
+height = int(sys.argv[2]) if len(sys.argv) == 4 else width
 
-size_w = int(sys.argv[1])  # リサイズ後のサイズ(横)
-size_h = int(sys.argv[2]) if len(sys.argv) == 4 else size_w  # リサイズ後のサイズ(縦)
-if size_h%32 != 0 or size_h%32 != 0:
+if width%32 != 0 or height%32 != 0:
     print('サイズは32の倍数')
 else:
-    class_num_limit = int(sys.argv[-1])  # Image内で使うクラス数（出てきた順に使う）
-    classes = glob.glob("Images/*")
-    class_name = open("class_name.txt", "w")
-    train = open("train.txt", "w")
+    class_num_limit = int(sys.argv[-1])
+    class_directories = glob.glob(os.path.join("Images", "*"))
+    class_name_txt = open("class_name.txt", "w")
+    train_txt = open("train.txt", "w")
 
     img_num = 1
     class_num = 0
 
-    for c in classes:
+    for class_path in class_directories:
+        class_name = os.path.basename(class_path)
 
-        #class_nameへの書き込み(クラス名)
-        class_name.write(c.split("/")[1])
-        class_name.write("\n")
+        #class_name.txtへの書き込み(クラス名)
+        class_name_txt.write(class_name)
+        class_name_txt.write("\n")
 
-        files = glob.glob(c+"/*")
-        for f in files:  # imageの名前
-            f_split = f.split("/")
+        img_files = glob.glob(os.path.join(class_path, "*"))
+        for img_path in img_files:  # imageの名前
+            img_split = img_path.split("/")
+            img_name = os.path.basename(img_path)
 
             #画像のリサイズ
-            img = Image.open(f)
-            w = size_w/img.width
-            h = size_h/img.height
-            img_resize = img.resize((size_w, size_h))
+            img = Image.open(img_path)
+            w = width/img.width
+            h = height/img.height
+            img_resize = img.resize((width, height))
             try:
-                img_resize.save("datasets/image"+str(img_num)+".jpg")
+                img_resize.save(os.path.join("datasets", "image"+str(img_num)+".jpg"))
             except Exception as e:
                 print(e)
                 continue
 
             #犬↓
-            '''
-            text = open("Annotation/"+f_split[1]+"/"+f_split[2][:-4])
+            
+            text = open(os.path.join("Annotation", class_name, os.path.splitext(img_name)[0]))
             for i in range(18):
                 text.readline()
             line = [0]*4
@@ -59,30 +66,32 @@ else:
                 a = text.readline().strip()
             if "object" in a:  # 複数の犬がいるのは使わない
                 continue
-            '''
+            
             #犬↑
             #普段使う方↓
-            
-            #trainへの書き込み(annotation)
-            text = open("Annotation/"+f_split[1]+"/"+f_split[2][:-4]+'.txt')
+            """
+            #train.txtへの書き込み(annotation)
+            text = open(os.path.join("Annotation", class_name, os.path.splitext(img_name)[0]+'.txt'))
             line = list(map(int, text.readline().split(",")))
-            
+            """
             #普段使う方↑
 
-            train.write("datasets/image" + str(img_num) + ".jpg ")
-            train.write(str(int(line[0]*w)))
-            train.write(",")
-            train.write(str(int(line[1]*h)))
-            train.write(",")
-            train.write(str(int(line[2]*w)))
-            train.write(",")
-            train.write(str(int(line[3]*h)))
-            train.write(",")
-            train.write(str(class_num))
-            train.write("\n")
+            train_txt.write(os.path.join("datasets", "image"+str(img_num)+".jpg "))
+            train_txt.write(str(int(line[0]*w)))
+            train_txt.write(",")
+            train_txt.write(str(int(line[1]*h)))
+            train_txt.write(",")
+            train_txt.write(str(int(line[2]*w)))
+            train_txt.write(",")
+            train_txt.write(str(int(line[3]*h)))
+            train_txt.write(",")
+            train_txt.write(str(class_num))
+            train_txt.write("\n")
 
             img_num += 1
         class_num += 1
+
         if class_num == class_num_limit:
             break
-    train.close()
+
+    train_txt.close()
