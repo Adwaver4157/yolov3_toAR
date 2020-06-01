@@ -20,7 +20,7 @@ width = int(sys.argv[1])
 height = int(sys.argv[2]) if len(sys.argv) == 4 else width
 
 if width%32 != 0 or height%32 != 0:
-    print('サイズは32の倍数')
+    print('Width and Height must be multiple of 32')
 else:
     class_num_limit = int(sys.argv[-1])
     class_directories = glob.glob(os.path.join("Images", "*"))
@@ -38,8 +38,8 @@ else:
         class_name_txt.write("\n")
 
         img_files = glob.glob(os.path.join(class_path, "*"))
-        for img_path in img_files:  # imageの名前
-            img_split = img_path.split("/")
+
+        for img_path in img_files:
             img_name = os.path.basename(img_path)
 
             #画像のリサイズ
@@ -54,7 +54,7 @@ else:
                 continue
 
             #犬↓
-            
+            """
             text = open(os.path.join("Annotation", class_name, os.path.splitext(img_name)[0]))
             for i in range(18):
                 text.readline()
@@ -66,17 +66,17 @@ else:
                 a = text.readline().strip()
             if "object" in a:  # 複数の犬がいるのは使わない
                 continue
-            
+            """
             #犬↑
             #普段使う方↓
-            """
-            #train.txtへの書き込み(annotation)
+
             text = open(os.path.join("Annotation", class_name, os.path.splitext(img_name)[0]+'.txt'))
             line = list(map(int, text.readline().split(",")))
-            """
+
             #普段使う方↑
 
-            train_txt.write(os.path.join("datasets", "image"+str(img_num)+".jpg "))
+            #train.txtへの書き込み(annotation)
+            train_txt.write(os.path.join("datasets", "image"+str(img_num)+".jpg"))
             train_txt.write(str(int(line[0]*w)))
             train_txt.write(",")
             train_txt.write(str(int(line[1]*h)))
@@ -89,8 +89,8 @@ else:
             train_txt.write("\n")
 
             img_num += 1
-        class_num += 1
 
+        class_num += 1
         if class_num == class_num_limit:
             break
 
