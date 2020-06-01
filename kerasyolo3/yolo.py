@@ -174,6 +174,7 @@ class YOLO(object):
         end = timer()
         print(end - start)
         return image
+        #return image, label, [left, top, right, bottom] #これが欲しい
 
     def close_session(self):
         self.sess.close()
