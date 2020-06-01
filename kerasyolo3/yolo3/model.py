@@ -11,7 +11,11 @@ from keras.layers.normalization import BatchNormalization
 from keras.models import Model
 from keras.regularizers import l2
 
-from yolo3.utils import compose
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # 探索ディレクトリに kerasyolo3/yolo3 を追加
+
+from utils import compose
 
 
 @wraps(Conv2D)

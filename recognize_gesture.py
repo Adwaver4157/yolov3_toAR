@@ -1,4 +1,3 @@
 import sys
-
-sys.path.append
-print(sys.path)
+from kerasyolo3 import yolo
+print(1)

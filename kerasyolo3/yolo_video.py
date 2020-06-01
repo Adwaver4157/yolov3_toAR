@@ -1,5 +1,9 @@
 import numpy as np
+
 import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # 探索ディレクトリに kerasyolo3 を追加
+
 import argparse
 from yolo import YOLO, detect_video
 from PIL import Image

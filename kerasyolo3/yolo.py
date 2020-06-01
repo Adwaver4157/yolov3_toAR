@@ -4,8 +4,11 @@ Class definition of YOLO_v3 style detection model on image and video
 """
 
 import colorsys
-import os
 from timeit import default_timer as timer
+
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # 探索ディレクトリに kerasyolo3 を追加
 
 import numpy as np
 from keras import backend as K
@@ -15,7 +18,7 @@ from PIL import Image, ImageFont, ImageDraw
 
 from yolo3.model import yolo_eval, yolo_body, tiny_yolo_body
 from yolo3.utils import letterbox_image
-import os
+
 from keras.utils import multi_gpu_model
 
 
