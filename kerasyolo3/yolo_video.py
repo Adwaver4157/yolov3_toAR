@@ -8,12 +8,13 @@ import argparse
 from yolo import YOLO, detect_video
 from PIL import Image
 
+
 def detect_img(yolo):
     while True:
         img = input('Input image filename:')
         try:
             image = Image.open(img)
-        except:
+        except Exception:
             print('Open Error! Try again!')
             continue
         else:
@@ -23,6 +24,7 @@ def detect_img(yolo):
             cv2.imwrite("out.jpg", np.asarray(r_image)[..., ::-1])
             r_image.show()
     yolo.close_session()
+
 
 FLAGS = None
 
@@ -60,13 +62,13 @@ if __name__ == '__main__':
     Command line positional arguments -- for video detection mode
     '''
     parser.add_argument(
-        "--input", nargs='?', type=str,required=False,default='./path2your_video',
-        help = "Video input path"
+        "--input", nargs='?', type=str, required=False, default='./path2your_video',
+        help="Video input path"
     )
 
     parser.add_argument(
         "--output", nargs='?', type=str, default="",
-        help = "[Optional] Video output path"
+        help="[Optional] Video output path"
     )
 
     FLAGS = parser.parse_args()
@@ -83,4 +85,3 @@ if __name__ == '__main__':
         detect_video(YOLO(**vars(FLAGS)), FLAGS.input, FLAGS.output)
     else:
         print("Must specify at least video_input_path.  See usage with --help.")
-    
