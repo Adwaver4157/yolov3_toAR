@@ -6,23 +6,19 @@ from kerasyolo3.yolo import YOLO
 
 cap = cv2.VideoCapture(1)
 if cap.isOpened():
-    #yolo = YOLO()
+    yolo = YOLO(model_image_size=(640, 320))
 
-    count = 0
     while True:
-        cv2.waitKey(1)
         _, frame = cap.read()
-        image = Image.fromarray(frame)
-        #image, label, box = yolo.detect_image(image)
-        result = np.asarray(image)
+        result, label, box = yolo.detect_image(frame)
         cv2.imshow("result", result)
 
         """
         label, boxを処理してジェスチャーを認識する
         """
 
-        count += 1        
-        if count == 100:
+        key = cv2.waitKey(1)   
+        if key == ord('q'):
             cv2.destroyAllWindows()
             cap.release()
             break

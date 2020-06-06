@@ -208,7 +208,6 @@ class YOLO(object):
         print(end - start)
         image = np.asarray(image)                                 # PILをndarrayに直す
         return image, m_class, m_box                              # 通常と異なるコード
-        # return image, label, [left, top, right, bottom] #これが欲しい
 
     def close_session(self):
         self.sess.close()
