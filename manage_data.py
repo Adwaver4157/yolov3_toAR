@@ -5,9 +5,14 @@ import datetime
 import random
 
 def make_image():
-    class_name = input("enter the class you want to make -> ")
-    class_image_path = os.path.join("Images", class_name)
-    class_annotation_path = os.path.join("Annotation", class_name)
+
+    while True:
+        project_name = input("enter project name -> ")
+        if project_name not in ("kerasyolo3", "sample"):
+            break
+    class_name = input("enter class name -> ")
+    class_image_path = os.path.join(project_name, "Images", class_name)
+    class_annotation_path = os.path.join(project_name, "Annotation", class_name)
     cap = cv2.VideoCapture(1)  # カメラ番号は多分0か1
     if cap.isOpened():
         print("successfully opened")
@@ -115,9 +120,6 @@ def make_image():
 
 def delete_image():
     print("作り途中")
-
-def save_image(c, img):
-    pass
 
 def main():
     s = input("make or delete? -> ")
