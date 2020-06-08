@@ -19,9 +19,9 @@ yolov3_toAR/
   |
   sample
   | |
-  | ┝ datasets <- 自分で空ディレクトリを作っておく  　  
-  | ┝ class_name.txt  ┐  resize.pyで
-  | ┝ train.txt       ┘  自動的に作られる
+  | ┝ datasets         ┐
+  | ┝ class_name.txt   | resize.pyで自動的に作られる
+  | ┝ train.txt        ┘
   | |
   | |
   | ┝ Images
@@ -63,9 +63,11 @@ x_min,y_min,x_max,y_max
 ## manage_data.pyの使い方
 
 ### ターミナル上
-1. make or delete => データを作成するか削除するかを選ぶ(現状makeのみ)
-2. enter the class you want to make =>　作りたいクラス名を入力(新規でも既存でも大丈夫)
-3. successfully opend => カメラが開けた failed to open => カメラが開けない、11行目の数字をいじる
+1. make or delete     => データを作成するか削除するかを選ぶ(現状makeのみ)
+2. enter project name => プロジェクト名を入力(kerasyolo3およびsample以外)
+3. enter class name   =>　作りたいクラス名を入力(新規でも既存でも大丈夫)
+4. successfully opend => カメラが開けた 
+   failed to open => カメラが開けない、11行目の数字をいじる
 
 ### window上
 * 緑色の枠に目標物を入れる
@@ -85,8 +87,10 @@ a:左、s:下、d:右、w:上、n:縮小、m:拡大
 
 ### 引数
 ```
-python resize.py リサイズ後の横の長さ リサイズ後の縦の長さ(横と同じならなくても良い)　使うクラス数
+-p,--project_name       : リサイズしたい画像のプロジェクト名
+-W,--width              : リサイズ後の横の長さ(32の倍数)
+-H,--height             : リサイズ後の縦の長さ(32の倍数、Widthと同じ時省略できる)
+-n,--number_of_classess : 使用したいクラス数(0の時、全てのクラスを使う)
 ```
 ### !!注意!!
-* datasetsディレクトリがないとerrorになる => 最初は空ディレクトリを作っておく
-* すでにdatasetsがある時は上書きされる(train.txt,class_name.txtも同様)ので、消したくないなら名前を変えるなどする
+* datasetsディレクトリが存在するとerrorになる => 事前にdatasetsがない状態にする(コンフリクトを避けるため)
