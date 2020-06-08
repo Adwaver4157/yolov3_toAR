@@ -123,7 +123,7 @@ class YOLO(object):
             boxed_image = letterbox_image(image, new_image_size)
         image_data = np.array(boxed_image, dtype='float32')
 
-        print(image_data.shape)
+        #print(image_data.shape)
         image_data /= 255.
         image_data = np.expand_dims(image_data, 0)  # Add batch dimension.
         out_boxes, out_scores, out_classes = self.sess.run(
@@ -136,26 +136,54 @@ class YOLO(object):
 
         print('Found {} boxes for {}'.format(len(out_boxes), 'img'))
 
-        font = ImageFont.truetype(font='font/FiraMono-Medium.otf',
-                                  size=np.floor(3e-2 * image.size[1] + 0.5).astype('int32'))
-        thickness = (image.size[0] + image.size[1]) // 300
-        max_score = 0
-        m_box = ()
-        m_class = '0'
-        for i, c in reversed(list(enumerate(out_classes))):
-            predicted_class = self.class_names[c]
-            box = out_boxes[i]
-            score = out_scores[i]
-            if max_score < score:
-                max_score = score  # 一番高い確率の者だけ持ってくる
-                m_box = box
-                m_class = predicted_class
-            """
-            label = '{} {:.2f}'.format(predicted_class, score)
+        if len(out_boxes) > 0:
+            font = ImageFont.truetype(font='kerasyolo3/font/FiraMono-Medium.otf',
+                                    size=np.floor(3e-2 * image.size[1] + 0.5).astype('int32'))
+            thickness = (image.size[0] + image.size[1]) // 300
+            max_score = 0
+            m_box = ()
+            m_class = '0'
+            for i, c in reversed(list(enumerate(out_classes))):
+                predicted_class = self.class_names[c]
+                box = out_boxes[i]
+                score = out_scores[i]
+                if max_score < score:
+                    max_score = score  # 一番高い確率の者だけ持ってくる
+                    m_box = box
+                    m_class = predicted_class
+                """
+                label = '{} {:.2f}'.format(predicted_class, score)
+                draw = ImageDraw.Draw(image)
+                label_size = draw.textsize(label, font)
+
+                top, left, bottom, right = box
+                top = max(0, np.floor(top + 0.5).astype('int32'))
+                left = max(0, np.floor(left + 0.5).astype('int32'))
+                bottom = min(image.size[1], np.floor(bottom + 0.5).astype('int32'))
+                right = min(image.size[0], np.floor(right + 0.5).astype('int32'))
+                print(label, (left, top), (right, bottom))
+
+                if top - label_size[1] >= 0:
+                    text_origin = np.array([left, top - label_size[1]])
+                else:
+                    text_origin = np.array([left, top + 1])
+
+                # My kingdom for a good redistributable image drawing library.
+                for i in range(thickness):
+                    draw.rectangle(
+                        [left + i, top + i, right - i, bottom - i],
+                        outline=self.colors[c])
+                draw.rectangle(
+                    [tuple(text_origin), tuple(text_origin + label_size)],
+                    fill=self.colors[c])
+                draw.text(text_origin, label, fill=(0, 0, 0), font=font)
+                del draw
+                """
+            label = '{} {:.2f}'.format(m_class, max_score)
             draw = ImageDraw.Draw(image)
             label_size = draw.textsize(label, font)
 
-            top, left, bottom, right = box
+            top, left, bottom, right = m_box
             top = max(0, np.floor(top + 0.5).astype('int32'))
             left = max(0, np.floor(left + 0.5).astype('int32'))
             bottom = min(image.size[1], np.floor(bottom + 0.5).astype('int32'))
@@ -167,7 +195,7 @@ class YOLO(object):
             else:
                 text_origin = np.array([left, top + 1])
 
-            # My kingdom for a good redistributable image drawing library.
+                # My kingdom for a good redistributable image drawing library.
             for i in range(thickness):
                 draw.rectangle(
                     [left + i, top + i, right - i, bottom - i],
@@ -177,37 +205,14 @@ class YOLO(object):
                 fill=self.colors[c])
             draw.text(text_origin, label, fill=(0, 0, 0), font=font)
             del draw
-            """
-        label = '{} {:.2f}'.format(m_class, max_score)
-        draw = ImageDraw.Draw(image)
-        label_size = draw.textsize(label, font)
-
-        top, left, bottom, right = m_box
-        top = max(0, np.floor(top + 0.5).astype('int32'))
-        left = max(0, np.floor(left + 0.5).astype('int32'))
-        bottom = min(image.size[1], np.floor(bottom + 0.5).astype('int32'))
-        right = min(image.size[0], np.floor(right + 0.5).astype('int32'))
-        print(label, (left, top), (right, bottom))
-
-        if top - label_size[1] >= 0:
-            text_origin = np.array([left, top - label_size[1]])
+            end = timer()
+            print(end - start)
+            image = np.asarray(image)                                 # PILをndarrayに直す
+            return image, m_class, m_box                              # 通常と異なるコード
         else:
-            text_origin = np.array([left, top + 1])
-
-            # My kingdom for a good redistributable image drawing library.
-        for i in range(thickness):
-            draw.rectangle(
-                [left + i, top + i, right - i, bottom - i],
-                outline=self.colors[c])
-        draw.rectangle(
-            [tuple(text_origin), tuple(text_origin + label_size)],
-            fill=self.colors[c])
-        draw.text(text_origin, label, fill=(0, 0, 0), font=font)
-        del draw
-        end = timer()
-        print(end - start)
-        image = np.asarray(image)                                 # PILをndarrayに直す
-        return image, m_class, m_box                              # 通常と異なるコード
+            end = timer()
+            print(end - start)
+            return image, None, []
 
     def close_session(self):
         self.sess.close()

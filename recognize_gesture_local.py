@@ -2,13 +2,14 @@
 学習済yoloを用いてlocalでwebカメラのリアルタイム推論を行う
 
 Args:
-        --model     : 学習済モデルのパス      (defaultは /content/yolov3_toAR/kerasyolo3/logs/000/trained_weights_stage_1.h5 であるがローカル利用なら必ず適切なパスを指定)
-        --anchors   : anchorsのパス         (defaultは model_data/yolo_anchors.txt であるがWDが違うのでこれも指定必須)
-        --classes   : class_name.txtのパス  (defaultは /content/yolov3_toAR/class_name.txt これも指定必須)
-        ex) recognoze_gesture_local.py --model aaa --anchors bbb --classes ccc
+        --model   : 学習済モデルの相対パス       (default : /content/yolov3_toAR/kerasyolo3/logs/000/trained_weights_stage_1.h5)
+        --anchors : yolo_anchors.txtの相対パス (default : model_data/yolo_anchors.txt)
+        --classes : class_name.txtの相対パス   (default : /content/yolov3_toAR/class_name.txt)
+        ex) python recognize_gesture_local.py --model_path data/yolov3_prog.h5 --anchors_path kerasyolo3/model_data/yolo_anchors.txt --classes_path data/class_name.txt
 
 """
 import cv2
+import os
 import numpy as np
 from PIL import Image
 from kerasyolo3.yolo import YOLO
@@ -20,14 +21,16 @@ def main():
         while True:
             _, frame = cap.read()
             frame = cv2.flip(frame, 1)
+
+            #############your process###############
+
+            result, mClass, mBox = yolo.detect_image(frame)
+            if mClass is not None:
+                cv2.rectangle(result, (mBox[0], mBox[1]), (mBox[2], mBox[3]), (0, 0, 255))
+
+            #############your process###############
+
             cv2.imshow("window", frame)
-
-            #############your process###############
-
-
-
-
-            #############your process###############
 
             key = cv2.waitKey(1)
             if key == ord('q'):
@@ -40,19 +43,23 @@ def main():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(argument_default=argparse.SUPPRESS)
+    current_path = os.getcwd()
     parser.add_argument(
-        '--model', type=str,
+        '--model_path', type=str,
         help='path to model weight file, default ' + YOLO.get_defaults("model_path")
     )
     parser.add_argument(
-        '--anchors', type=str,
+        '--anchors_path', type=str,
         help='path to anchor definitions, default ' + YOLO.get_defaults("anchors_path")
     )
     parser.add_argument(
-        '--classes', type=str,
+        '--classes_path', type=str,
         help='path to class definitions, default ' + YOLO.get_defaults("classes_path")
     )
-    FLAGS = parser.parse_args()
-    yolo = YOLO(**vars(FLAGS))
+    FLAGS = vars(parser.parse_args())
+    for arg in FLAGS:
+        FLAGS[arg] = os.path.join(current_path, FLAGS[arg])
+    print(FLAGS)
+    yolo = YOLO(**FLAGS)
 
     main()
