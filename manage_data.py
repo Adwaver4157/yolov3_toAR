@@ -16,7 +16,7 @@ def make_image():
     cap = cv2.VideoCapture(1)  # カメラ番号は多分0か1
     if cap.isOpened():
         print("successfully opened")
-        print("make "+class_name)
+        print("make "+project_name+'/'+class_name)
 
         #ディレクトリの存在確認
         if not os.path.exists(class_image_path):
@@ -36,7 +36,6 @@ def make_image():
         count = 0
 
         while True:
-
             # 枠の操作
             r = random.randint(-2, 2)
             key = cv2.waitKey(10)
@@ -104,7 +103,6 @@ def make_image():
                     f.write(",")
                     f.write(str(ymax))
                     f.write("\n")
-
             count += 1
 
         cap.release()
@@ -115,8 +113,6 @@ def make_image():
     a = input("continue to make images?(y/n) -> ")
     if a == "y":
         make_image()
-    else:
-        return
 
 def delete_image():
     print("作り途中")
