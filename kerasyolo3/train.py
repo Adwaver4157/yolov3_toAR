@@ -53,7 +53,7 @@ def _main():
     np.random.seed(10101)
     np.random.shuffle(lines)
     np.random.seed(None)
-    num_val = int(len(lines)*val_split)
+    num_val = int(len(lines) * val_split)
     num_train = len(lines) - num_val
 
     # Train with frozen layers first, to get a stable loss.
@@ -67,10 +67,10 @@ def _main():
         print('Train on {} samples, val on {} samples, with batch size {}.'.format(
             num_train, num_val, batch_size))
         model.fit_generator(data_generator_wrapper(lines[:num_train], batch_size, input_shape, anchors, num_classes),
-                            steps_per_epoch=max(1, num_train//batch_size),
+                            steps_per_epoch=max(1, num_train // batch_size),
                             validation_data=data_generator_wrapper(
                                 lines[num_train:], batch_size, input_shape, anchors, num_classes),
-                            validation_steps=max(1, num_val//batch_size),
+                            validation_steps=max(1, num_val // batch_size),
                             epochs=10,
                             initial_epoch=0,
                             callbacks=[logging, checkpoint])
@@ -90,10 +90,10 @@ def _main():
         print('Train on {} samples, val on {} samples, with batch size {}.'.format(
             num_train, num_val, batch_size))
         model.fit_generator(data_generator_wrapper(lines[:num_train], batch_size, input_shape, anchors, num_classes),
-                            steps_per_epoch=max(1, num_train//batch_size),
+                            steps_per_epoch=max(1, num_train // batch_size),
                             validation_data=data_generator_wrapper(
                                 lines[num_train:], batch_size, input_shape, anchors, num_classes),
-                            validation_steps=max(1, num_val//batch_size),
+                            validation_steps=max(1, num_val // batch_size),
                             epochs=20,
                             initial_epoch=10,
                             callbacks=[logging, checkpoint, reduce_lr, early_stopping])
@@ -105,10 +105,10 @@ def _main():
     path = os.getcwd()
     os.chdir('/content/drive/My Drive/data/')
     store_path = os.path.join(os.getcwd(), 'yolov3_final.h5')
-    #json_string = model.to_json()
-    #open(os.path.join(store_path, 'yolov3_model.json'), 'w').write(json_string)
-    #yaml_string = model.to_yaml()
-    #open(os.path.join(store_path, 'yolov3_model.yaml'), 'w').write(yaml_string)
+    # json_string = model.to_json()
+    # open(os.path.join(store_path, 'yolov3_model.json'), 'w').write(json_string)
+    # yaml_string = model.to_yaml()
+    # open(os.path.join(store_path, 'yolov3_model.yaml'), 'w').write(yaml_string)
     model.save_weights(store_path)
     os.chdir(path)
 
@@ -137,10 +137,10 @@ def create_model(input_shape, anchors, num_classes, load_pretrained=True, freeze
     h, w = input_shape
     num_anchors = len(anchors)
 
-    y_true = [Input(shape=(h//{0: 32, 1: 16, 2: 8}[l], w//{0: 32, 1: 16, 2: 8}[l],
-                           num_anchors//3, num_classes+5)) for l in range(3)]
+    y_true = [Input(shape=(h // {0: 32, 1: 16, 2: 8}[l], w // {0: 32, 1: 16, 2: 8}[l],
+                           num_anchors // 3, num_classes + 5)) for l in range(3)]
 
-    model_body = yolo_body(image_input, num_anchors//3, num_classes)
+    model_body = yolo_body(image_input, num_anchors // 3, num_classes)
     print('Create YOLOv3 model with {} anchors and {} classes.'.format(
         num_anchors, num_classes))
 
@@ -149,7 +149,7 @@ def create_model(input_shape, anchors, num_classes, load_pretrained=True, freeze
         print('Load weights {}.'.format(weights_path))
         if freeze_body in [1, 2]:
             # Freeze darknet53 body or freeze all but 3 output layers.
-            num = (185, len(model_body.layers)-3)[freeze_body-1]
+            num = (185, len(model_body.layers) - 3)[freeze_body - 1]
             for i in range(num):
                 model_body.layers[i].trainable = False
             print('Freeze the first {} layers of total {} layers.'.format(
@@ -171,10 +171,10 @@ def create_tiny_model(input_shape, anchors, num_classes, load_pretrained=True, f
     h, w = input_shape
     num_anchors = len(anchors)
 
-    y_true = [Input(shape=(h//{0: 32, 1: 16}[l], w//{0: 32, 1: 16}[l],
-                           num_anchors//2, num_classes+5)) for l in range(2)]
+    y_true = [Input(shape=(h // {0: 32, 1: 16}[l], w // {0: 32, 1: 16}[l],
+                           num_anchors // 2, num_classes + 5)) for l in range(2)]
 
-    model_body = tiny_yolo_body(image_input, num_anchors//2, num_classes)
+    model_body = tiny_yolo_body(image_input, num_anchors // 2, num_classes)
     print('Create Tiny YOLOv3 model with {} anchors and {} classes.'.format(
         num_anchors, num_classes))
 
@@ -183,7 +183,7 @@ def create_tiny_model(input_shape, anchors, num_classes, load_pretrained=True, f
         print('Load weights {}.'.format(weights_path))
         if freeze_body in [1, 2]:
             # Freeze the darknet body or freeze all but 2 output layers.
-            num = (20, len(model_body.layers)-2)[freeze_body-1]
+            num = (20, len(model_body.layers) - 2)[freeze_body - 1]
             for i in range(num):
                 model_body.layers[i].trainable = False
             print('Freeze the first {} layers of total {} layers.'.format(
@@ -211,7 +211,7 @@ def data_generator(annotation_lines, batch_size, input_shape, anchors, num_class
                 annotation_lines[i], input_shape, random=True)
             image_data.append(image)
             box_data.append(box)
-            i = (i+1) % n
+            i = (i + 1) % n
         image_data = np.array(image_data)
         box_data = np.array(box_data)
         y_true = preprocess_true_boxes(

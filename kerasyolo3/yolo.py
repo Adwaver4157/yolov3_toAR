@@ -24,9 +24,9 @@ from keras.utils import multi_gpu_model
 
 class YOLO(object):
     _defaults = {
-        "model_path": '/content/yolov3_toAR/kerasyolo3/logs/000/trained_weights_stage_1.h5',
+        "model_path": 'model_data/yolov3_final.h5',
         "anchors_path": 'model_data/yolo_anchors.txt',
-        "classes_path": '/content/yolov3_toAR/class_name.txt',
+        "classes_path": 'model_data/class_name.txt',
         "score": 0.3,
         "iou": 0.45,
         "model_image_size": (320, 320),
@@ -123,7 +123,7 @@ class YOLO(object):
             boxed_image = letterbox_image(image, new_image_size)
         image_data = np.array(boxed_image, dtype='float32')
 
-        #print(image_data.shape)
+        # print(image_data.shape)
         image_data /= 255.
         image_data = np.expand_dims(image_data, 0)  # Add batch dimension.
         out_boxes, out_scores, out_classes = self.sess.run(
@@ -138,7 +138,7 @@ class YOLO(object):
 
         if len(out_boxes) > 0:
             font = ImageFont.truetype(font='kerasyolo3/font/FiraMono-Medium.otf',
-                                    size=np.floor(3e-2 * image.size[1] + 0.5).astype('int32'))
+                                      size=np.floor(3e-2 * image.size[1] + 0.5).astype('int32'))
             thickness = (image.size[0] + image.size[1]) // 300
             max_score = 0
             m_box = ()
