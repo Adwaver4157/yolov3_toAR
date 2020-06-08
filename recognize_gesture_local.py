@@ -2,10 +2,10 @@
 学習済yoloを用いてlocalでwebカメラのリアルタイム推論を行う
 
 Args:
-        --model   : 学習済モデルの相対パス       (default : /content/yolov3_toAR/kerasyolo3/logs/000/trained_weights_stage_1.h5)
-        --anchors : yolo_anchors.txtの相対パス (default : model_data/yolo_anchors.txt)
-        --classes : class_name.txtの相対パス   (default : /content/yolov3_toAR/class_name.txt)
-        ex) python recognize_gesture_local.py --model_path kerasyolo3/model_data/yolov3_prog.h5 --anchors_path kerasyolo3/model_data/yolo_anchors.txt --classes_path data/class_name.txt
+    --model   : 学習済モデルの相対パス       (default : modeldata/yolov3_final.h5)
+    --anchors : yolo_anchors.txtの相対パス (default : model_data/yolo_anchors.txt)
+    --classes : class_name.txtの相対パス   (default : model_data/class_name.txt)
+    ex) python recognize_gesture_local.py --model_path kerasyolo3/model_data/yolov3_prog.h5 --anchors_path kerasyolo3/model_data/yolo_anchors.txt --classes_path sample/class_name.txt
 
 """
 import cv2

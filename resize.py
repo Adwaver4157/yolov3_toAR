@@ -4,11 +4,11 @@ Images, Annotation内にある画像をリサイズする
 ** datasetsディレクトリがないときerrorとなる **
 
 Args:
-        -p,--project_name       : リサイズしたい画像のプロジェクト名
-        -w,--width              : リサイズ後の横の長さ(32の倍数)
-        -h,--height             : リサイズ後の縦の長さ(32の倍数、Widthと同じ時省略できる)
-        -n,--number_of_classess : 使用したいクラス数(0の時、全てのクラスを使う)
-        ex) Handプロジェクトの画像を2クラス分だけ640*320にリサイズしたい -> python resize.py -p Hand -w 640 -n 2
+    -p,--project_name       : リサイズしたい画像のプロジェクト名
+    -W,--width              : リサイズ後の横の長さ(32の倍数)
+    -H,--height             : リサイズ後の縦の長さ(32の倍数、Widthと同じ時省略できる)
+    -n,--number_of_classes  : 使用したいクラス数(0の時、全てのクラスを使う)
+    ex) Handプロジェクトの画像を2クラス分だけ640*320にリサイズしたい -> python resize.py -p Hand -w 640 -n 2
 
 """
 import glob
@@ -31,6 +31,11 @@ def main(**kwargs):
 
         img_num = 1
         class_num = 0
+        try:
+            os.mkdir(os.path.join(project_name, "datasets"))
+        except Exception:
+            print("'datasets' directory already exists. Make sure that the directory is empty and delete it.")
+            return
 
         for class_path in class_directories:
             class_name = os.path.basename(class_path)
@@ -107,13 +112,13 @@ if __name__ == '__main__':
         help='リサイズしたい画像のプロジェクト名 default:sample'
     )
     parser.add_argument(
-        '-w', '--width',
+        '-W', '--width',
         type=int,
         default=320,
         help='リサイズ後の横の長さ default:320'
     )
     parser.add_argument(
-        '-h', '--height',
+        '-H', '--height',
         type=int,
         default=320,
         help='リサイズ後の縦の長さ default:320'
