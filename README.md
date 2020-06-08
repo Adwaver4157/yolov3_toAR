@@ -10,7 +10,10 @@ yolov3_toAR/
   |
   ┝ README.md
   ┝ kears-yolov3
-  |
+  |     |
+  |     ┝ model_data
+  |          ┝ yolo_anchor.txt
+  |          ┝ ~~~~.h5 <- 学習済モデル
   ┝ resize.py
   ┝ manage_data.py <- ImagesとAnnotationを作成してくれる
   |
