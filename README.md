@@ -24,8 +24,8 @@ yolov3_toAR/
   | ┝ train.txt        ┘
   | |
   | |
-  | ┝ Images
-  | |   ┝ class01 <-クラス名はなんでもいい
+  | ┝ Images <- 
+  | |   ┝ class01 <-クラス名はなんでもいい(ここではもとから命名されている)
   | |   |   ┝ img1.jpg
   | |   |   ...
   | |   |   └ img1000.jpg
