@@ -12,35 +12,43 @@ yolov3_toAR/
   ┝ kears-yolov3
   |
   ┝ resize.py
-  ┝ datasets      　  ┐
-  ┝ class_name.txt 　 ├  この三つはresize.pyで作られる
-  ┝ train.txt       　┘
-  |
   ┝ manage_data.py <- ImagesとAnnotationを作成してくれる
   |
-  ┝ Images
-  |   ┝ class01 <-クラス名はなんでもいい
-  |   |   ┝ img1.jpg
-  |   |   ...
-  |   |   └ img1000.jpg
-  |   ┝ class02
-  |   |   ┝ img1.jpg
-  |   |   ...
-  |   |   └ img1000.jpg
-  |   ...
+  sample
+  | |
+  | ┝ datasets <- 自分で空ディレクトリを作っておく  　  
+  | ┝ class_name.txt  ┐  resize.pyで
+  | ┝ train.txt       ┘  自動的に作られる
+  | |
+  | |
+  | ┝ Images
+  | |   ┝ class01 <-クラス名はなんでもいい
+  | |   |   ┝ img1.jpg
+  | |   |   ...
+  | |   |   └ img1000.jpg
+  | |   ┝ class02
+  | |   |   ┝ img1.jpg
+  | |   |   ...
+  | |   |   └ img1000.jpg
+  | |   ...
+  | |
+  | └ Annotation
+  |     ┝ class01 <-Images内のディレクトリに対応する名前
+  |     |   ┝ class01.txt <- クラス内の画像の総数や、更新情報
+  |     |   ┝ img1.txt <- Images内の同名画像のannotation(書式は下)
+  |     |   ...
+  |     |   └ img1000.txt
+  |     ┝ class02
+  |     |   ┝ class02.txt
+  |     |   ┝ img1.txt
+  |     |   ...
+  |     |   └ img1000.txt
+  |     ...
   |
-  └ Annotation
-      ┝ class01 <-Images内のディレクトリに対応する名前
-      |   ┝ class01.txt <- クラス内の画像の総数や、更新情報
-      |   ┝ img1.txt <- Images内の同名画像のannotation(書式は下)
-      |   ...
-      |   └ img1000.txt
-      ┝ class02
-      |   ┝ class02.txt
-      |   ┝ img1.txt
-      |   ...
-      |   └ img1000.txt
-      ...
+  Hand <-その他、自分で作ったプロジェクト(sampleと同様の構成)
+  | |
+  |  ...
+  ...
 ```
 ### annotationの書式
 ```
