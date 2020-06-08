@@ -24,7 +24,7 @@ yolov3_toAR/
   | ┝ train.txt        ┘
   | |
   | |
-  | ┝ Images <- 
+  | ┝ Images <- manage_data.pyで作る(ここではhttp://vision.stanford.edu/aditya86/ImageNetDogsから持ってくる)
   | |   ┝ class01 <-クラス名はなんでもいい(ここではもとから命名されている)
   | |   |   ┝ img1.jpg
   | |   |   ...
