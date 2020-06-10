@@ -2,6 +2,7 @@
 Retrain the YOLO model for your own dataset.
 """
 import os
+import argparse
 import numpy as np
 import keras.backend as K
 from keras.layers import Input, Lambda
@@ -13,14 +14,18 @@ from yolo3.model import preprocess_true_boxes, yolo_body, tiny_yolo_body, yolo_l
 from yolo3.utils import get_random_data
 
 
-def _main():
-    annotation_path = '/content/yolov3_toAR/train.txt'
+def _main(**kwargs):
+    annotation_path = '/content/yolov3_toAR/Hand/train.txt'
     log_dir = 'logs/000/'
-    classes_path = '/content/yolov3_toAR/class_name.txt'
+    classes_path = '/content/yolov3_toAR/Hand/class_name.txt'
     anchors_path = 'model_data/yolo_anchors.txt'
     class_names = get_classes(classes_path)
     num_classes = len(class_names)
     anchors = get_anchors(anchors_path)
+
+    project_name = kwargs['project_name']
+    classes_path = os.path.join("content/yolov3_toAR", project_name, "class_name.txt")
+    annotation_path = os.path.join("content/yolov3_toAR", project_name, "train.txt")
 
     input_shape = (320, 320)  # multiple of 32, hw
 
@@ -227,4 +232,12 @@ def data_generator_wrapper(annotation_lines, batch_size, input_shape, anchors, n
 
 
 if __name__ == '__main__':
-    _main()
+    parser = argparse.ArgumentParser(argument_default=argparse.SUPPRESS)
+
+    parser.add_argument(
+        '-p', '--project_name', type=str,
+        help='datasets name, default setting is Hand'
+    )
+
+    FLAGS = parser.parse_args()
+    _main(**vars(FLAGS))
