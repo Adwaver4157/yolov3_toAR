@@ -136,7 +136,7 @@ class YOLO(object):
                 K.learning_phase(): 0
             })
         pre_end = timer()
-        print("predict", (pre_end-pre_start)*1000//1000, "[s]")
+        print("predict", int((pre_end-pre_start)*1000)/1000, "[s]")
 
         print('Found {} boxes for {}'.format(len(out_boxes), 'img'))
 
