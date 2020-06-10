@@ -56,10 +56,6 @@ if __name__ == '__main__':
         '--classes_path', type=str,
         help='path to class definitions, default ' + YOLO.get_defaults("classes_path")
     )
-    parser.add_argument(
-        '--image_size', type=tuple,
-        help='path to class definitions, default ' + YOLO.get_defaults("classes_path")
-    )
     FLAGS = vars(parser.parse_args())
     for arg in FLAGS:
         FLAGS[arg] = os.path.join(current_path, FLAGS[arg])
