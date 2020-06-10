@@ -126,6 +126,8 @@ class YOLO(object):
         # print(image_data.shape)
         image_data /= 255.
         image_data = np.expand_dims(image_data, 0)  # Add batch dimension.
+
+        pre_start = timer()
         out_boxes, out_scores, out_classes = self.sess.run(
             [self.boxes, self.scores, self.classes],
             feed_dict={
@@ -133,16 +135,18 @@ class YOLO(object):
                 self.input_image_shape: [image.size[1], image.size[0]],
                 K.learning_phase(): 0
             })
+        pre_end = timer()
+        print("predict", int((pre_end-pre_start)*1000)/1000, "[s]")
 
         print('Found {} boxes for {}'.format(len(out_boxes), 'img'))
 
+        max_score = 0
+        m_class = None
+        m_box = ()
         if len(out_boxes) > 0:
             font = ImageFont.truetype(font='kerasyolo3/font/FiraMono-Medium.otf',
                                       size=np.floor(3e-2 * image.size[1] + 0.5).astype('int32'))
             thickness = (image.size[0] + image.size[1]) // 300
-            max_score = 0
-            m_box = ()
-            m_class = '0'
             for i, c in reversed(list(enumerate(out_classes))):
                 predicted_class = self.class_names[c]
                 box = out_boxes[i]
@@ -205,14 +209,12 @@ class YOLO(object):
                 fill=self.colors[c])
             draw.text(text_origin, label, fill=(0, 0, 0), font=font)
             del draw
-            end = timer()
-            print(end - start)
             image = np.asarray(image)                                 # PILをndarrayに直す
-            return image, m_class, m_box                              # 通常と異なるコード
-        else:
-            end = timer()
-            print(end - start)
-            return image, None, []
+
+        end = timer()
+        print(end - start)
+
+        return image, m_class, m_box                                  # 通常と異なるコード
 
     def close_session(self):
         self.sess.close()

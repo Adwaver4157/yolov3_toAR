@@ -5,7 +5,7 @@ Args:
     --model   : 学習済モデルの相対パス       (default : modeldata/yolov3_final.h5)
     --anchors : yolo_anchors.txtの相対パス (default : model_data/yolo_anchors.txt)
     --classes : class_name.txtの相対パス   (default : model_data/class_name.txt)
-    ex) python recognize_gesture_local.py --model_path kerasyolo3/model_data/yolov3_prog.h5 --anchors_path kerasyolo3/model_data/yolo_anchors.txt --classes_path sample/class_name.txt
+    ex) python recognize_gesture_local.py --model_path kerasyolo3/model_data/yolov3_prog.h5 --anchors_path kerasyolo3/model_data/yolo_anchors.txt --classes_path kerasyolo3/model_data/class_name.txt
 
 """
 import cv2
