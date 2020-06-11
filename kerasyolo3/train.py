@@ -24,8 +24,8 @@ def _main(**kwargs):
     anchors = get_anchors(anchors_path)
 
     project_name = kwargs['project_name']
-    classes_path = os.path.join("content/yolov3_toAR", project_name, "class_name.txt")
-    annotation_path = os.path.join("content/yolov3_toAR", project_name, "train.txt")
+    classes_path = os.path.join("/content/yolov3_toAR", project_name, "class_name.txt")
+    annotation_path = os.path.join("/content/yolov3_toAR", project_name, "train.txt")
 
     input_shape = (320, 320)  # multiple of 32, hw
 
