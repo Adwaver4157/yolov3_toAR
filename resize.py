@@ -83,7 +83,7 @@ def main(**kwargs):
             #普段使う方↑
 
             #train.txtへの書き込み(annotation)
-            train_txt.write(os.path.join(project_name, "datasets", "image"+str(img_num)+".jpg"))
+            train_txt.write(os.path.join("/content/yolov3_toAR/", project_name, "datasets", "image"+str(img_num)+".jpg"))
             train_txt.write(' ')
             train_txt.write(str(int(line[0]*w)))
             train_txt.write(",")
