@@ -1,7 +1,7 @@
 """
 Images, Annotation内にある画像をリサイズする
 
-** datasetsディレクトリがないときerrorとなる **
+** リサイズしたいprojectのディレクトリ下には Images Annotation のみをおく(それぞれmanage_data.pyで作成される) **
 
 Args:
     -p,--project_name       : リサイズしたい画像のプロジェクト名
