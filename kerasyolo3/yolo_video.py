@@ -18,7 +18,7 @@ def detect_img(yolo):
             print('Open Error! Try again!')
             continue
         else:
-            r_image = yolo.detect_image(image)
+            r_image, _, _ = yolo.detect_image(image)
             print(type(r_image))
             import cv2
             cv2.imwrite("out.jpg", r_image)
