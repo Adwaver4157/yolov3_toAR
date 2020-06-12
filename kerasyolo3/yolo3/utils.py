@@ -96,6 +96,9 @@ def get_random_data(annotation_line, input_shape, random=True, max_boxes=20, jit
     if flip:
         image = image.transpose(Image.FLIP_LEFT_RIGHT)
 
+    # rotate image
+    image_data = image.rotate(random.randint(-10, 10))
+
     # distort image
     hue = rand(-hue, hue)
     sat = rand(1, sat) if rand() < .5 else 1 / rand(1, sat)
@@ -109,9 +112,6 @@ def get_random_data(annotation_line, input_shape, random=True, max_boxes=20, jit
     x[x > 1] = 1
     x[x < 0] = 0
     image = hsv_to_rgb(x)  # numpy array, 0 to 1
-
-    # rotate image
-    image_data = image.rotate(random.randint(-10, 10))
 
     # correct boxes
     box_data = np.zeros((max_boxes, 5))
