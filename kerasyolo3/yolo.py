@@ -136,7 +136,7 @@ class YOLO(object):
                 K.learning_phase(): 0
             })
         pre_end = timer()
-        print("predict", int((pre_end-pre_start)*1000)/1000, "[s]")
+        print("predict", int((pre_end - pre_start) * 1000) / 1000, "[s]")
 
         print('Found {} boxes for {}'.format(len(out_boxes), 'img'))
 
@@ -144,7 +144,7 @@ class YOLO(object):
         m_class = None
         m_box = ()
         if len(out_boxes) > 0:
-            font = ImageFont.truetype(font='kerasyolo3/font/FiraMono-Medium.otf',
+            font = ImageFont.truetype(font='font/FiraMono-Medium.otf',
                                       size=np.floor(3e-2 * image.size[1] + 0.5).astype('int32'))
             thickness = (image.size[0] + image.size[1]) // 300
             for i, c in reversed(list(enumerate(out_classes))):
@@ -241,7 +241,7 @@ def detect_video(yolo, video_path, output_path=""):
     while True:
         return_value, frame = vid.read()
         image = Image.fromarray(frame)
-        image = yolo.detect_image(image)
+        image, _, _ = yolo.detect_image(image)
         result = np.asarray(image)
         curr_time = timer()
         exec_time = curr_time - prev_time
