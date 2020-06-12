@@ -97,7 +97,7 @@ def get_random_data(annotation_line, input_shape, random=True, max_boxes=20, jit
         image = image.transpose(Image.FLIP_LEFT_RIGHT)
 
     # rotate image
-    image_data = image.rotate(random.randint(-10, 10))
+    image_data = image.rotate(np.random.randint(-10, 10))
 
     # distort image
     hue = rand(-hue, hue)
