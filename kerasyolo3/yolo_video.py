@@ -21,7 +21,7 @@ def detect_img(yolo):
             r_image, _, _ = yolo.detect_image(image)
             print(type(r_image))
             import cv2
-            cv2.imwrite("out.jpg", r_image)
+            cv2.imwrite("out.jpg", r_image[..., ::-1])
     yolo.close_session()
 
 
