@@ -34,8 +34,18 @@ function fan() {
     fi
 }
 
+* pythonを3.6に変える
+.bashrcに以下を書き込む
+alias python='/usr/bin/python3.6'
+
+*.pyファイルの修正
+先頭に以下を書き込む
+# coding:utf-8
+
 
 * パフォーマンスを上げる
 $ sudo jetson_clocks
 
+
 * PATHを通す
+
