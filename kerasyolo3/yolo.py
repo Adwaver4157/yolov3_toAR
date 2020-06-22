@@ -144,7 +144,7 @@ class YOLO(object):
         m_class = None
         m_box = ()
         if len(out_boxes) > 0:
-            font = ImageFont.truetype(font='font/FiraMono-Medium.otf',
+            font = ImageFont.truetype(font='kerasyolo3/font/FiraMono-Medium.otf',
                                       size=np.floor(3e-2 * image.size[1] + 0.5).astype('int32'))
             thickness = (image.size[0] + image.size[1]) // 300
             for i, c in reversed(list(enumerate(out_classes))):
@@ -209,7 +209,7 @@ class YOLO(object):
                 fill=self.colors[c])
             draw.text(text_origin, label, fill=(0, 0, 0), font=font)
             del draw
-            image = np.asarray(image)                                 # PILをndarrayに直す
+        image = np.asarray(image)                                 # PILをndarrayに直す
 
         end = timer()
         print(end - start)

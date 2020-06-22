@@ -25,12 +25,12 @@ def main():
             #############your process###############
 
             result, mClass, mBox = yolo.detect_image(frame)
+
             if mClass is not None:
-                cv2.rectangle(result, (mBox[0], mBox[1]), (mBox[2], mBox[3]), (0, 0, 255))
+                cv2.rectangle(result, (mBox[1], mBox[0]), (mBox[3], mBox[2]), (0, 0, 255))
 
             #############your process###############
-
-            cv2.imshow("window", frame)
+            cv2.imshow("window", result)
 
             key = cv2.waitKey(1)
             if key == ord('q'):
