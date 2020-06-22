@@ -1,0 +1,41 @@
+* wifiの設定
+設定する
+
+
+* アップデート
+$ sudo apt update
+$ sudo apt upgrade
+$ sudo apt autoremove
+
+
+* スワップファイルの設定
+$ git clone https://github.com/JetsonHacksNano/installSwapfile
+$ cd installSwapfile
+$ ./installSwapfile.sh
+
+
+* keras等を入れる
+$ git clone https://github.com/karaage0703/jetson-nano-tools
+$ cd jetson-nano-tools
+$ ./install-tensorflow.sh
+$ sudo apt install libatlas-base-dev gfortran
+$ sudo apt-get install python3-scipy
+$ sudo apt-get install python3-keras
+$ sudo apt-get install python3-matplotlib
+
+
+* ファンの設定
+.bashrcに以下を書き込み
+function fan() {
+    if [ $1 -ge 0 -a $1 -le 255 ]; then
+	sudo sh -c "echo $1 > /sys/devices/pwm-fan/target_pwm"
+    else
+	echo 'must be 0~255'
+    fi
+}
+
+
+* パフォーマンスを上げる
+$ sudo jetson_clocks
+
+* PATHを通す
