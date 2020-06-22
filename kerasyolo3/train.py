@@ -18,7 +18,7 @@ def _main(**kwargs):
     annotation_path = '/content/yolov3_toAR/Hand/train.txt'
     log_dir = 'logs/000/'
     classes_path = '/content/yolov3_toAR/Hand/class_name.txt'
-    anchors_path = 'model_data/yolo_anchors.txt'
+    anchors_path = 'model_data/tiny_yolo_anchors.txt'
     class_names = get_classes(classes_path)
     num_classes = len(class_names)
     anchors = get_anchors(anchors_path)
@@ -32,7 +32,7 @@ def _main(**kwargs):
     is_tiny_version = len(anchors) == 6  # default setting
     if is_tiny_version:
         model = create_tiny_model(input_shape, anchors, num_classes,
-                                  freeze_body=2, weights_path='model_data/tiny_yolo_weights.h5')
+                                  freeze_body=2, weights_path='model_data/tiny_yolo.h5')
     else:
         model = create_model(input_shape, anchors, num_classes,
                              freeze_body=2, weights_path='model_data/yolo.h5')  # make sure you know what you freeze
@@ -42,7 +42,7 @@ def _main(**kwargs):
     #                             monitor='val_loss', save_weights_only=True, save_best_only=True, period=3)
     path = os.getcwd()
     os.chdir('/content/drive/My Drive/data/')
-    store_path = os.path.join(os.getcwd(), 'yolov3_prog.h5')
+    store_path = os.path.join(os.getcwd(), 'tiny_yolov3_prog.h5')
     model.save_weights(store_path)
     os.chdir(path)
     checkpoint = ModelCheckpoint(store_path,
@@ -79,7 +79,7 @@ def _main(**kwargs):
                             epochs=10,
                             initial_epoch=0,
                             callbacks=[logging, checkpoint])
-        model.save_weights(log_dir + 'trained_weights_stage_1.h5')
+        model.save_weights(log_dir + 'trained_tiny_weights_stage_1.h5')
 
     # Unfreeze and continue training, to fine-tune.
     # Train longer if the result is not good.
@@ -102,14 +102,14 @@ def _main(**kwargs):
                             epochs=20,
                             initial_epoch=10,
                             callbacks=[logging, checkpoint, reduce_lr, early_stopping])
-        model.save_weights(log_dir + 'trained_weights_final.h5')
+        model.save_weights(log_dir + 'trained_tiny_weights_final.h5')
 
     # Further training if needed.
     # 好みのモデルにパラメータ(モデル)保存ファイルをstore_pathに設定
 
     path = os.getcwd()
     os.chdir('/content/drive/My Drive/data/')
-    store_path = os.path.join(os.getcwd(), 'yolov3_final.h5')
+    store_path = os.path.join(os.getcwd(), 'tiny_yolov3_final.h5')
     # json_string = model.to_json()
     # open(os.path.join(store_path, 'yolov3_model.json'), 'w').write(json_string)
     # yaml_string = model.to_yaml()
@@ -169,7 +169,7 @@ def create_model(input_shape, anchors, num_classes, load_pretrained=True, freeze
 
 
 def create_tiny_model(input_shape, anchors, num_classes, load_pretrained=True, freeze_body=2,
-                      weights_path='model_data/tiny_yolo_weights.h5'):
+                      weights_path='model_data/tiny_yolo.h5'):
     '''create the training model, for Tiny YOLOv3'''
     K.clear_session()  # get a new session
     image_input = Input(shape=(None, None, 3))
