@@ -40,7 +40,8 @@ def rand(a=0, b=1):
 def get_random_data(annotation_line, input_shape, random=True, max_boxes=20, jitter=.3, hue=.1, sat=1.5, val=1.5, proc_img=True):
     '''random preprocessing for real-time data augmentation'''
     line = annotation_line.split()
-    path = os.path.join('/content/yolov3_toAR', line[0])
+    #path = os.path.join('/content/yolov3_toAR', line[0])
+    path = os.path.join('/content/drive/My Drive/Hand', line[0])
     image = Image.open(path)
     iw, ih = image.size
     h, w = input_shape
