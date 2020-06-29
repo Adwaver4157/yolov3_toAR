@@ -41,7 +41,7 @@ def get_random_data(annotation_line, input_shape, random=True, max_boxes=20, jit
     '''random preprocessing for real-time data augmentation'''
     line = annotation_line.split()
     #path = os.path.join('/content/yolov3_toAR', line[0])
-    path = os.path.join('/content/drive/My Drive/Hand', line[0])
+    path = os.path.join('/content/drive/My Drive/', line[0])
     image = Image.open(path)
     iw, ih = image.size
     h, w = input_shape
