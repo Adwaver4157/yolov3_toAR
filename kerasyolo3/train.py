@@ -27,7 +27,7 @@ def _main(**kwargs):
     classes_path = os.path.join("/content/yolov3_toAR", project_name, "class_name.txt")
     annotation_path = os.path.join("/content/yolov3_toAR", project_name, "train.txt")
 
-    input_shape = (320, 320)  # multiple of 32, hw
+    input_shape = (320, 160)  # multiple of 32, hw
 
     is_tiny_version = len(anchors) == 6  # default setting
     if is_tiny_version:
