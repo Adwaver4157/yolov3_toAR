@@ -1,8 +1,9 @@
-import numpy as np
+# coding:utf-8
 import cv2
 import os
 import datetime
 import random
+
 
 def make_image():
 
@@ -12,17 +13,19 @@ def make_image():
             break
     class_name = input("enter class name -> ")
     class_image_path = os.path.join(project_name, "Images", class_name)
-    class_annotation_path = os.path.join(project_name, "Annotation", class_name)
-    cap = cv2.VideoCapture(1)  # カメラ番号は多分0か1
+    class_annotation_path = os.path.join(
+        project_name, "Annotation", class_name)
+    cap = cv2.VideoCapture("/dev/video1", cv2.CAP_V4L2)
     if cap.isOpened():
         print("successfully opened")
         print("make "+project_name+'/'+class_name)
 
-        #ディレクトリの存在確認
+        # ディレクトリの存在確認
         if not os.path.exists(class_image_path):
             os.makedirs(class_image_path)
             os.makedirs(class_annotation_path)
-        class_text = open(os.path.join(class_annotation_path, class_name+".txt"), 'a+')
+        class_text = open(os.path.join(
+            class_annotation_path, class_name+".txt"), 'a+')
         size = len(os.listdir(class_image_path))+0  # 初期値をずらしてコンフリクトを避ける
         size2 = size
 
@@ -65,7 +68,7 @@ def make_image():
                 takeSS_flag = not takeSS_flag
             elif key == ord('q'):
                 if size2 > size+1:
-                    #更新内容を追加
+                    # 更新内容を追加
                     class_text.write("更新時刻:")
                     class_text.write(str(datetime.datetime.now()))
                     class_text.write(" 更新内容:")
@@ -77,23 +80,27 @@ def make_image():
                 cv2.destroyWindow("window")
                 break
 
-            #画面の更新
+            # 画面の更新
             _, frame = cap.read()
             frame = cv2.flip(frame, 1)
             frame_copy = frame.copy()
             if takeSS_flag:
-                cv2.rectangle(frame_copy, (xmin, ymin), (xmax, ymax), (0, 0, 255))
+                cv2.rectangle(frame_copy, (xmin, ymin),
+                              (xmax, ymax), (0, 0, 255))
             else:
-                cv2.rectangle(frame_copy, (xmin, ymin), (xmax, ymax), (0, 255, 0))
+                cv2.rectangle(frame_copy, (xmin, ymin),
+                              (xmax, ymax), (0, 255, 0))
 
-            cv2.putText(frame_copy, str(size2), (0, h//3), cv2.FONT_HERSHEY_SIMPLEX, 2.0, (0, 255, 0), thickness=2)  # 現在の枚数を描画
+            cv2.putText(frame_copy, str(size2), (0, h//3),
+                        cv2.FONT_HERSHEY_SIMPLEX, 2.0, (0, 255, 0), thickness=2)  # 現在の枚数を描画
             cv2.imshow("window", frame_copy)
 
-            #画面を保存
-            if count%takeSS == 0 and takeSS_flag:
-                #書き出し
+            # 画面を保存
+            if count % takeSS == 0 and takeSS_flag:
+                # 書き出し
                 size2 += 1
-                cv2.imwrite(os.path.join(class_image_path, "img"+str(size2)+".jpg"), frame)
+                cv2.imwrite(os.path.join(class_image_path,
+                                         "img"+str(size2)+".jpg"), frame)
                 with open(os.path.join(class_annotation_path, "img"+str(size2)+".txt"), "w") as f:
                     f.write(str(xmin))
                     f.write(",")
@@ -114,8 +121,10 @@ def make_image():
     if a == "y":
         make_image()
 
+
 def delete_image():
     print("作り途中")
+
 
 def main():
     s = input("make or delete? -> ")
@@ -125,6 +134,7 @@ def main():
         delete_image()
     else:
         print("invalid input")
+
 
 if __name__ == '__main__':
     main()

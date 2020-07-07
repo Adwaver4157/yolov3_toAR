@@ -1,3 +1,4 @@
+# coding:utf-8
 """
 Images, Annotation内にある画像をリサイズする
 
@@ -12,16 +13,16 @@ Args:
 
 """
 import glob
-import sys
 import os
 from PIL import Image
 import argparse
+
 
 def main(**kwargs):
     width = kwargs['width']
     height = kwargs['height']
 
-    assert width%32 == 0 and height%32 == 0, 'Width and Height must be multiple of 32'
+    assert width % 32 == 0 and height % 32 == 0, 'Width and Height must be multiple of 32'
 
     project_name = kwargs['project_name']
     class_num_limit = kwargs['number_of_classes']
@@ -40,7 +41,7 @@ def main(**kwargs):
     for class_path in class_directories:
         class_name = os.path.basename(class_path)
 
-        #class_name.txtへの書き込み(クラス名)
+        # class_name.txtへの書き込み(クラス名)
         class_name_txt.write(class_name)
         class_name_txt.write("\n")
 
@@ -49,18 +50,19 @@ def main(**kwargs):
         for img_path in img_files:
             img_name = os.path.basename(img_path)
 
-            #画像のリサイズ
+            # 画像のリサイズ
             img = Image.open(img_path)
             w = width/img.width
             h = height/img.height
             img_resize = img.resize((width, height))
             try:
-                img_resize.save(os.path.join(project_name, "datasets", "image"+str(img_num)+".jpg"))
+                img_resize.save(os.path.join(
+                    project_name, "datasets", "image"+str(img_num)+".jpg"))
             except Exception as e:
                 print(e)
                 continue
 
-            #犬↓
+            # 犬↓
             """
             text = open(os.path.join(project_name, "Annotation", class_name, os.path.splitext(img_name)[0]))
             for i in range(18):
@@ -74,16 +76,18 @@ def main(**kwargs):
             if "object" in a:  # 複数の犬がいるのは使わない
                 continue
             """
-            #犬↑
-            #普段使う方↓
+            # 犬↑
+            # 普段使う方↓
 
-            text = open(os.path.join(project_name, "Annotation", class_name, os.path.splitext(img_name)[0]+'.txt'))
+            text = open(os.path.join(project_name, "Annotation",
+                                     class_name, os.path.splitext(img_name)[0]+'.txt'))
             line = list(map(int, text.readline().split(",")))
 
-            #普段使う方↑
+            # 普段使う方↑
 
-            #train.txtへの書き込み(annotation)
-            train_txt.write(os.path.join("/content/yolov3_toAR/", project_name, "datasets", "image"+str(img_num)+".jpg"))
+            # train.txtへの書き込み(annotation)
+            train_txt.write(os.path.join("/content/yolov3_toAR/",
+                                         project_name, "datasets", "image"+str(img_num)+".jpg"))
             train_txt.write(' ')
             train_txt.write(str(int(line[0]*w)))
             train_txt.write(",")
@@ -103,6 +107,7 @@ def main(**kwargs):
             break
 
     train_txt.close()
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

@@ -1,3 +1,4 @@
+# coding:utf-8
 import IPython
 import cv2
 import numpy as np
@@ -9,6 +10,7 @@ from kerasyolo3.yolo import YOLO
 import argparse
 
 from google.colab import output
+
 
 def use_cam(quality=0.2):
     js = Javascript('''
@@ -81,8 +83,9 @@ def use_cam(quality=0.2):
     display(js)
     data = output.eval_js('useCam({})'.format(quality))
 
+
 def run(img_str):
-    #decode to image
+    # decode to image
     decimg = base64.b64decode(img_str.split(',')[1], validate=True)
     decimg = Image.open(BytesIO(decimg))
     decimg = np.array(decimg, dtype=np.uint8)
@@ -94,10 +97,12 @@ def run(img_str):
 
     #############your process###############
 
-    #encode to string
-    _, encimg = cv2.imencode(".jpg", out_img, [int(cv2.IMWRITE_JPEG_QUALITY), 80])
+    # encode to string
+    _, encimg = cv2.imencode(
+        ".jpg", out_img, [int(cv2.IMWRITE_JPEG_QUALITY), 80])
     img_str = encimg.tostring()
-    img_str = "data:image/jpeg;base64," + base64.b64encode(img_str).decode('utf-8')
+    img_str = "data:image/jpeg;base64," + \
+        base64.b64encode(img_str).decode('utf-8')
     return IPython.display.JSON({'img_str': img_str})
 
 
@@ -105,15 +110,18 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(argument_default=argparse.SUPPRESS)
     parser.add_argument(
         '--model', type=str,
-        help='path to model weight file, default ' + YOLO.get_defaults("model_path")
+        help='path to model weight file, default ' +
+        YOLO.get_defaults("model_path")
     )
     parser.add_argument(
         '--anchors', type=str,
-        help='path to anchor definitions, default ' + YOLO.get_defaults("anchors_path")
+        help='path to anchor definitions, default ' +
+        YOLO.get_defaults("anchors_path")
     )
     parser.add_argument(
         '--classes', type=str,
-        help='path to class definitions, default ' + YOLO.get_defaults("classes_path")
+        help='path to class definitions, default ' +
+        YOLO.get_defaults("classes_path")
     )
     FLAGS = parser.parse_args()
     yolo = YOLO(**vars(FLAGS))

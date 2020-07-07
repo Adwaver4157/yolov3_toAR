@@ -1,3 +1,4 @@
+# coding:utf-8
 """Miscellaneous utility functions."""
 
 from functools import reduce
@@ -74,7 +75,8 @@ def get_random_data(annotation_line, input_shape, random=True, max_boxes=20, jit
         return image_data, box_data
 
     # resize image
-    new_ar = w / h * rand(1 - jitter, 1 + jitter) / rand(1 - jitter, 1 + jitter)
+    new_ar = w / h * rand(1 - jitter, 1 + jitter) / \
+        rand(1 - jitter, 1 + jitter)
     scale = rand(.25, 2)
     if new_ar < 1:
         nh = int(scale * h)
