@@ -1,8 +1,10 @@
-import numpy as np
+# coding:utf-8
 
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # 探索ディレクトリに kerasyolo3 を追加
+
+# 探索ディレクトリにkerasyolo3を追加
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 import argparse
 from yolo import YOLO, detect_video
@@ -83,4 +85,4 @@ if __name__ == '__main__':
     elif "input" in FLAGS:
         detect_video(YOLO(**vars(FLAGS)), FLAGS.input, FLAGS.output)
     else:
-        print("Must specify at least video_input_path.  See usage with --help.")
+        print("Must specify at least video_input_path. See usage with --help.")
