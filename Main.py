@@ -6,8 +6,8 @@ Args:
     --model   : 学習済モデルの相対パス       (default : modeldata/yolov3_final.h5)
     --anchors : yolo_anchors.txtの相対パス (default : model_data/yolo_anchors.txt)
     --classes : class_name.txtの相対パス   (default : model_data/class_name.txt)
-    ex) Main.py --model_path kerasyolo3/model_data/tiny_yolov3_prog.h5
-                --anchors_path kerasyolo3/model_data/tiny_yolo_anchors.txt
+    ex) Main.py --model_path kerasyolo3/model_data/yolov3_prog.h5
+                --anchors_path kerasyolo3/model_data/yolo_anchors.txt
                 --classes_path kerasyolo3/model_data/class_name.txt
                 --gestures_path kerasyolo3/model_data/gestures.txt
 """
@@ -34,10 +34,10 @@ def main():
                 cv2.rectangle(result, (mBox[1], mBox[0]),
                               (mBox[3], mBox[2]), (0, 0, 255))
 
-            gesture = rg.recogniseGesture(result)
+            gesture_name = rg.recognizeGesture(result, mBox, mClass)
 
-            if gesture != -1:
-                pass
+            if gesture_name is not None:
+                print(gesture_name)
 
             # # # # # # # your process # # # # # # #
 
