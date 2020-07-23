@@ -1,7 +1,5 @@
 # coding:utf-8
 
-import queue
-
 
 class RecognizeGesture:
     def __init__(self, path):
