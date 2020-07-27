@@ -3,8 +3,8 @@
 以下の colab をコピーして学習、テストすることができます
 https://colab.research.google.com/drive/1pi7Iskwi2G_nYMithtQFPoyqWzQ6BFmp?usp=sharing
 
-
 ## ディレクトリ構成
+
 ```
 yolov3_toAR/
   |
@@ -53,44 +53,72 @@ yolov3_toAR/
   |  ...
   ...
 ```
-### annotationの書式
+
+### annotation の書式
+
 ```
 x_min,y_min,x_max,y_max
 ```
-対象を囲う最小のboxについてのxの最小、yの最小、、、をカンマ区切りで書く  
-（犬のを持ってくるときはそのままで大丈夫、ただしresize.pyの内容の「普段」というところをコメントアウトして、「犬」のところを有効にする）
 
-## manage_data.pyの使い方
+対象を囲う最小の box についての x の最小、y の最小、、、をカンマ区切りで書く  
+（犬のを持ってくるときはそのままで大丈夫、ただし resize.py の内容の「普段」というところをコメントアウトして、「犬」のところを有効にする）
 
-### ターミナル上
-1. make or delete     => データを作成するか削除するかを選ぶ(現状makeのみ)
-2. enter project name => プロジェクト名を入力(kerasyolo3およびsample以外)
-3. enter class name   =>　作りたいクラス名を入力(新規でも既存でも大丈夫)
-4. successfully opend => カメラが開けた 
-   failed to open => カメラが開けない、11行目の数字をいじる
-
-### window上
-* 緑色の枠に目標物を入れる
-* 枠の移動は
-```
-a:左、s:下、d:右、w:上、n:縮小、m:拡大 
-```
-* xを押すと枠が赤くなる -> 赤い間は画像が保存される
-* もう一度xを押すと緑に戻る
-* 止める時はqを押す
+## manage_data.py の使い方
 
 ### ターミナル上
-1. continue to make images?　=> 他のクラスを作りたいならy、そうでないならn
-2. yなら上記の操作を繰り返す
 
-## resize.pyの使い方
+1. make or delete => データを作成するか削除するかを選ぶ(現状 make のみ)
+2. enter project name => プロジェクト名を入力(kerasyolo3 および sample 以外)
+3. enter class name =>　作りたいクラス名を入力(新規でも既存でも大丈夫)
+4. successfully opend => カメラが開けた
+   failed to open => カメラが開けない、11 行目の数字をいじる
+
+### window 上
+
+- 緑色の枠に目標物を入れる
+- 枠の移動は
+
+```
+a:左、s:下、d:右、w:上、n:縮小、m:拡大
+```
+
+- x を押すと枠が赤くなる -> 赤い間は画像が保存される
+- もう一度 x を押すと緑に戻る
+- 止める時は q を押す
+
+### ターミナル上
+
+1. continue to make images?　=> 他のクラスを作りたいなら y、そうでないなら n
+2. y なら上記の操作を繰り返す
+
+## resize.py の使い方
 
 ### 引数
+
 ```
 -p,--project_name       : リサイズしたい画像のプロジェクト名
 -W,--width              : リサイズ後の横の長さ(32の倍数)
 -H,--height             : リサイズ後の縦の長さ(32の倍数、Widthと同じ時省略できる)
 -n,--number_of_classes  : 使用したいクラス数(0の時、全てのクラスを使う)
 ```
+
 ### !!注意!!
-* datasetsディレクトリが存在するとerrorになる => 事前にdatasetsがない状態にする(コンフリクトを避けるため)
+
+- datasets ディレクトリが存在すると error になる => 事前に datasets がない状態にする(コンフリクトを避けるため)
+
+## ジェスチャー認識による AR 操作（yolo_ar.py の使い方）
+
+### 事前準備
+
+1. calibration のディレクトリに移動し、main.py を実行してください。
+2. 生成された camera_matrix_aruco.yaml を一番上のディレクトリ（yolov3_toAR）に移動させてください。
+
+### 3D モデルについて
+
+- 描画したい 3D モデルは、一番上のディレクトリ（yolov3_toAR）に対応する.mtl ファイルと.ogj ファイルをおいてください。
+
+### 実行の仕方
+
+```
+~/.../yolov3_toAR$ python yolo_ar.py --gesture_path (ジェスチャーパス)
+```
