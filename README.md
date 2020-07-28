@@ -108,7 +108,21 @@ a:左、s:下、d:右、w:上、n:縮小、m:拡大
 
 ## ジェスチャー認識による AR 操作（yolo_ar.py の使い方）
 
-### 事前準備
+### 環境構築
+
+入れるのが難しいものがあるので、後で詳細を追記します
+
+```
+imutils==0.5.3
+opencv-contrib-python==4.2.0.34
+Pillow==7.1.2
+pygame==1.9.6
+PyOpenGL==3.1.5
+PyOpenGL-accelerate==3.1.5
+PyYAML==5.3.1
+```
+
+### 事前準備(工事中)
 
 1. calibration のディレクトリに移動し、main.py を実行してください。
 2. 生成された camera_matrix_aruco.yaml を一番上のディレクトリ（yolov3_toAR）に移動させてください。
@@ -120,5 +134,5 @@ a:左、s:下、d:右、w:上、n:縮小、m:拡大
 ### 実行の仕方
 
 ```
-~/.../yolov3_toAR$ python yolo_ar.py --gesture_path (ジェスチャーパス)
+~/.../yolov3_toAR$ python yolo_ar.py --gestures_path (ジェスチャーパス)
 ```
