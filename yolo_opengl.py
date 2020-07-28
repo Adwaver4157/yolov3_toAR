@@ -1,18 +1,12 @@
-from OpenGL.GL import *
-from OpenGL.GLUT import *
-from OpenGL.GLU import *
 import cv2
 from PIL import Image
 import numpy as np
-from objloader import *
 import cv2.aruco as aruco
 import yaml
-import os
-import argparse
-
-from yolo import YOLO
-from RecognizeGesture import RecognizeGesture
-from ar import GestureAR
+from OpenGL.GL import *
+from OpenGL.GLUT import *
+from OpenGL.GLU import *
+from objloader import *
 
 
 class OpenGL():
@@ -27,7 +21,8 @@ class OpenGL():
         self.texture_background = None
 
         ####
-        self.cam_matrix, self.dist_coefs, revecs, tvecs = self.get_cam_matrix("camera_matrix_aruco.yaml")
+        self.cam_matrix, self.dist_coefs, revecs, tvecs = self.get_cam_matrix(
+            "camera_matrix_aruco.yaml")
 
     def get_cam_matrix(self, file):
         with open(file) as f:
@@ -82,7 +77,8 @@ class OpenGL():
         glBindTexture(GL_TEXTURE_2D, self.texture_background)
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
-        glTexImage2D(GL_TEXTURE_2D, 0, 3, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, bg_image)
+        glTexImage2D(GL_TEXTURE_2D, 0, 3, x, y, 0,
+                     GL_RGBA, GL_UNSIGNED_BYTE, bg_image)
         # draw texture_background
         glBindTexture(GL_TEXTURE_2D, self.texture_background)
         glPushMatrix()
@@ -113,12 +109,15 @@ class OpenGL():
         height, width, channel = image.shape
         corners, ids, _ = aruco.detectMarkers(image, aruco_dict)
         if ids is not None and corners is not None:
-            rvecs, tvecs, _objpoints = aruco.estimatePoseSingleMarkers(corners[0], 0.6, self.cam_matrix, self.dist_coefs)
+            rvecs, tvecs, _objpoints = aruco.estimatePoseSingleMarkers(
+                corners[0], 0.6, self.cam_matrix, self.dist_coefs)
             rmtx = cv2.Rodrigues(rvecs)[0]
 
             view_matrix = np.array([[rmtx[0][0], rmtx[0][1], rmtx[0][2], tvecs[0][0][0]],
-                                    [rmtx[1][0], rmtx[1][1], rmtx[1][2], tvecs[0][0][1]],
-                                    [rmtx[2][0], rmtx[2][1], rmtx[2][2], tvecs[0][0][2]],
+                                    [rmtx[1][0], rmtx[1][1], rmtx[1]
+                                        [2], tvecs[0][0][1]],
+                                    [rmtx[2][0], rmtx[2][1], rmtx[2]
+                                        [2], tvecs[0][0][2]],
                                     [0.0, 0.0, 0.0, 1.0]])
             view_matrix = view_matrix * self.INVERSE_MATRIX
             view_matrix = np.transpose(view_matrix)
@@ -158,41 +157,3 @@ class OpenGL():
         self.init_gl(640, 480)
         glutKeyboardFunc(self.ex)
         glutMainLoop()
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(argument_default=argparse.SUPPRESS)
-    current_path = os.getcwd()
-    parser.add_argument(
-        '--model_path', type=str,
-        help='path to model weight file, default ' +
-        YOLO.get_defaults("model_path")
-    )
-    parser.add_argument(
-        '--anchors_path', type=str,
-        help='path to anchor definitions, default ' +
-        YOLO.get_defaults("anchors_path")
-    )
-    parser.add_argument(
-        '--classes_path', type=str,
-        help='path to class definitions, default ' +
-        YOLO.get_defaults("classes_path")
-    )
-    parser.add_argument(
-        '--gestures_path', type=str,
-        help='path to gesture definition, default ' +
-        'kerasyolo3/model_data/gestures.txt'
-    )
-    FLAGS = vars(parser.parse_args())
-    for arg in FLAGS:
-        FLAGS[arg] = os.path.join(current_path, FLAGS[arg])
-    print(FLAGS)
-
-    gestures_path = FLAGS.pop("gestures_path")
-    # create YOLO and RecognizeGesture
-    yolo = YOLO(**FLAGS)
-    rg = RecognizeGesture(gestures_path)
-    gesture_ar = GestureAR()
-    # create OpenGL
-    openGL = OpenGL()
-    openGL.main()

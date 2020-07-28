@@ -17,6 +17,8 @@ import os
 from kerasyolo3.yolo import YOLO
 from RecognizeGesture import RecognizeGesture
 import argparse
+from ar import GestureAR
+from yolo_opengl import OpenGL
 
 
 def main():
@@ -83,11 +85,14 @@ if __name__ == '__main__':
 
     gestures_path = FLAGS.pop("gestures_path")
 
-    # YOLO(画像認識クラス)生成
+    # create YOLO and RecognizeGesture
     yolo = YOLO(**FLAGS)
-
-    # RecognizeGesture(ジェスチャー認識クラス)生成
     rg = RecognizeGesture(gestures_path)
     rg.showGesture()
+    gesture_ar = GestureAR()
+
+    # create OpenGL
+    openGL = OpenGL()
+    openGL.main()
 
     main()
