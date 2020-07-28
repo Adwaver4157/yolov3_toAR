@@ -1,12 +1,17 @@
-import cv2
-from PIL import Image
-import numpy as np
-import cv2.aruco as aruco
-import yaml
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 from objloader import *
+import cv2.aruco as aruco
+import yaml
+import cv2
+import os
+from kerasyolo3.yolo import YOLO
+from RecognizeGesture import RecognizeGesture
+import argparse
+from ar import GestureAR
+from yolo_opengl import OpenGL
+import numpy as np
 
 
 class OpenGL():
@@ -157,3 +162,44 @@ class OpenGL():
         self.init_gl(640, 480)
         glutKeyboardFunc(self.ex)
         glutMainLoop()
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(argument_default=argparse.SUPPRESS)
+    current_path = os.getcwd()
+    parser.add_argument(
+        '--model_path', type=str,
+        help='path to model weight file, default ' +
+        YOLO.get_defaults("model_path")
+    )
+    parser.add_argument(
+        '--anchors_path', type=str,
+        help='path to anchor definitions, default ' +
+        YOLO.get_defaults("anchors_path")
+    )
+    parser.add_argument(
+        '--classes_path', type=str,
+        help='path to class definitions, default ' +
+        YOLO.get_defaults("classes_path")
+    )
+    parser.add_argument(
+        '--gestures_path', type=str,
+        help='path to gesture definition, default ' +
+        'kerasyolo3/model_data/gestures.txt'
+    )
+    FLAGS = vars(parser.parse_args())
+    for arg in FLAGS:
+        FLAGS[arg] = os.path.join(current_path, FLAGS[arg])
+    print(FLAGS)
+
+    gestures_path = FLAGS.pop("gestures_path")
+
+    # create YOLO and RecognizeGesture
+    yolo = YOLO(**FLAGS)
+    rg = RecognizeGesture(gestures_path)
+    rg.showGesture()
+    gesture_ar = GestureAR()
+
+    # create OpenGL
+    openGL = OpenGL()
+    openGL.main()
