@@ -113,13 +113,13 @@ a:左、s:下、d:右、w:上、n:縮小、m:拡大
 入れるのが難しいものがあるので、後で詳細を追記します
 
 ```
-imutils
-opencv-contrib-python
-Pillow
-pygame
-PyOpenGL
-PyOpenGL-accelerate
-PyYAML
+imutils==0.5.3
+opencv-contrib-python==4.2.0.34
+Pillow==7.1.2
+pygame==1.9.6
+PyOpenGL==3.1.5
+PyOpenGL-accelerate==3.1.5
+PyYAML==5.3.1
 ```
 
 ### 事前準備(工事中)
