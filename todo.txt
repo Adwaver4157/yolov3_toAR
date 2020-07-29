@@ -22,7 +22,6 @@ $ sudo apt install libatlas-base-dev gfortran
 $ sudo apt-get install python3-scipy
 $ sudo apt-get install python3-keras
 $ sudo apt-get install python3-matplotlib
-$ sudo pip install pygame
 
 
 * ファンの設定
@@ -39,6 +38,14 @@ function fan() {
 * pythonを3.6に変える
 .bashrcに以下を書き込む
 alias python='/usr/bin/python3.6'
+
+* pygameのinstall
+$ sudo apt-get install libsdl-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
+$ sudo apt-get install libsmpeg-dev libportmidi-dev libavformat-dev libswscale-dev
+$ sudo apt-get install libfreetype6-dev
+$ sudo apt-get install libportmidi-dev
+$ sudo apt-get install python3-pip
+$ pip3 install pygame
 
 *.pyファイルの修正
 先頭に以下を書き込む
