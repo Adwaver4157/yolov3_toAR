@@ -23,18 +23,6 @@ $ sudo apt-get install python3-scipy
 $ sudo apt-get install python3-keras
 $ sudo apt-get install python3-matplotlib
 
-
-* ファンの設定
-.bashrcに以下を書き込み
-function fan() {
-    if [ $1 -ge 0 -a $1 -le 255 ]; then
-	sudo sh -c "echo $1 > /sys/devices/pwm-fan/target_pwm"
-    else
-	echo 'must be 0~255'
-    fi
-}
-
-
 * pythonを3.6に変える
 .bashrcに以下を書き込む
 alias python='/usr/bin/python3.6'
@@ -47,9 +35,31 @@ $ sudo apt-get install libportmidi-dev
 $ sudo apt-get install python3-pip
 $ pip3 install pygame
 
+
+* yolov3_toARのclone
+$ git clone https://github.com/Adwaver4157/yolov3_toAR.git
+
+
+* opencv-contrib-pythonのinstall
+yolov3_toARのinstall_opencv4.1.0_Nano.shをホームへ移動
+$ mkdir opencv
+$ sh install_opencv4.1.0_Nano.sh opencv
+
+
 *.pyファイルの修正
 先頭に以下を書き込む
 # coding:utf-8
+
+
+* ファンの設定
+.bashrcに以下を書き込み
+function fan() {
+    if [ $1 -ge 0 -a $1 -le 255 ]; then
+	sudo sh -c "echo $1 > /sys/devices/pwm-fan/target_pwm"
+    else
+	echo 'must be 0~255'
+    fi
+}
 
 
 * パフォーマンスを上げる
