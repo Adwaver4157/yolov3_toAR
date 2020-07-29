@@ -22,6 +22,7 @@ $ sudo apt install libatlas-base-dev gfortran
 $ sudo apt-get install python3-scipy
 $ sudo apt-get install python3-keras
 $ sudo apt-get install python3-matplotlib
+$ sudo pip install pygame
 
 
 * ファンの設定
@@ -33,6 +34,7 @@ function fan() {
 	echo 'must be 0~255'
     fi
 }
+
 
 * pythonを3.6に変える
 .bashrcに以下を書き込む
