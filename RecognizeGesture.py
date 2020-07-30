@@ -22,16 +22,16 @@ class RecognizeGesture:
             return None
         img = image.copy()
         h, w = img.shape[0], img.shape[1]
-        x = (box[0]+box[2])//2
-        y = (box[1]+box[3])//2
+        x = (box[0] + box[2]) // 2
+        y = (box[1] + box[3]) // 2
         quadrant = 0
-        if x <= h//2:
-            if y <= w//2:
+        if x <= h // 2:
+            if y <= w // 2:
                 quadrant = 1
             else:
                 quadrant = 2
         else:
-            if y <= w//2:
+            if y <= w // 2:
                 quadrant = 4
             else:
                 quadrant = 3
@@ -41,21 +41,21 @@ class RecognizeGesture:
 
     def patternMatch(self):
         for ges in self.dict:
-            flag = False
-            length = len(self.dict[ges])//2
+            flag = True
+            length = len(self.dict[ges]) // 2
             for i in range(length):
-                flag &= (self.dict[ges][2*i:2*(i+1)] == self.arr[-length+i])
+                flag &= (self.dict[ges][2 * i:2 * (i + 1)] == self.arr[-length + i])
             if flag:
                 return ges
         return None
 
     def showGesture(self):
         for ges in self.dict:
-            print("ジェスチャー["+ges+"] : ", end='')
-            for j in range(len(self.dict[ges])//2):
-                print(str(self.dict[ges][j*2])+"象限, サイン" +
-                      str(self.dict[ges][j*2+1]), end='')
-                if((j+1)*2 == len(self.dict[ges])):
+            print("ジェスチャー[" + ges + "] : ", end='')
+            for j in range(len(self.dict[ges]) // 2):
+                print(str(self.dict[ges][j * 2]) + "象限, サイン" +
+                      str(self.dict[ges][j * 2 + 1]), end='')
+                if((j + 1) * 2 == len(self.dict[ges])):
                     print()
                 else:
                     print(" -> ", end='')
