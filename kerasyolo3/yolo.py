@@ -23,11 +23,22 @@ from keras.utils import multi_gpu_model
 
 
 class YOLO(object):
+    """
     _defaults = {
         "model_path": 'model_data/yolov3_final.h5',
         "anchors_path": 'model_data/tiny_yolo_anchors.txt',
         "classes_path": 'model_data/class_name.txt',
         "score": 0.3,
+        "iou": 0.45,
+        "model_image_size": (320, 320),
+        "gpu_num": 1,
+    }
+    """
+    _defaults = {
+        "model_path": 'model_data/tiny_yolov3_final_re.h5',
+        "anchors_path": 'model_data/tiny_yolo_anchors.txt',
+        "classes_path": 'model_data/class_name.txt',
+        "score": 0.04,
         "iou": 0.45,
         "model_image_size": (320, 320),
         "gpu_num": 1,
@@ -221,9 +232,17 @@ class YOLO(object):
         self.sess.close()
 
 
+WIDTH = 360
+HEIGHT = 180
+FPS = 5
+
+
 def detect_video(yolo, video_path, output_path=""):
     import cv2
     vid = cv2.VideoCapture(video_path)
+    vid.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
+    vid.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
+    vid.set(cv2.CAP_PROP_FPS, FPS)
     if not vid.isOpened():
         raise IOError("Couldn't open webcam or video")
     video_FourCC = int(vid.get(cv2.CAP_PROP_FOURCC))
