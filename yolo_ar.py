@@ -101,15 +101,17 @@ class OpenGL():
 
         # aruco settings
         aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
-        result, mClass, mBox = yolo.detect_image(image)
+        result, mClass, mBox = self.yolo.detect_image(image)
         if mClass is not None:
             cv2.rectangle(result, (mBox[1], mBox[0]),
                           (mBox[3], mBox[2]), (0, 0, 255))
-        gesture_name = rg.recognizeGesture(result, mBox, mClass)
+            if mClass == 'paper':
+                mClass = 1
+        gesture_name = self.rg.recognizeGesture(result, mBox, mClass)
+        print(gesture_name)
         if gesture_name is not None:
-            gesture_ar.fix_render(image)
-            if gesture_name >= 2:
-                image = gesture_ar.operate_ar(image, mBox, gesture_name)
+            image = self.gesture_ar.fix_render(image)
+            image = self.gesture_ar.operate_ar(image, mBox, gesture_name)
         ####
 
         height, width, channel = image.shape
