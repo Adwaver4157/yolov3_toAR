@@ -40,6 +40,8 @@ class RecognizeGesture:
         return self.patternMatch()
 
     def patternMatch(self):
+        if len(self.arr) < 4:
+            return None
         for ges in self.dict:
             flag = True
             length = len(self.dict[ges]) // 2
