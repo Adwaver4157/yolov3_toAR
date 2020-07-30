@@ -232,9 +232,17 @@ class YOLO(object):
         self.sess.close()
 
 
+WIDTH = 360
+HEIGHT = 180
+FPS = 5
+
+
 def detect_video(yolo, video_path, output_path=""):
     import cv2
     vid = cv2.VideoCapture(video_path)
+    vid.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
+    vid.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
+    vid.set(cv2.CAP_PROP_FPS, FPS)
     if not vid.isOpened():
         raise IOError("Couldn't open webcam or video")
     video_FourCC = int(vid.get(cv2.CAP_PROP_FOURCC))
