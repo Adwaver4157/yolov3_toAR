@@ -21,10 +21,13 @@ class OpenGL():
                                [-1.0, -1.0, -1.0, -1.0],
                                [1.0, 1.0, 1.0, 1.0]])
 
-    def __init__(self):
-        self.cap = cv2.VideoCapture('/dev/video0', cv2.CAP_V4L2)
+    def __init__(self, yolo, rg, gesture_ar):
+        self.cap = cv2.VideoCapture(0)
         self.object = None
         self.texture_background = None
+        self.yolo = yolo
+        self.rg = rg
+        self.gesture_ar = gesture_ar
 
         ####
         self.cam_matrix, self.dist_coefs, revecs, tvecs = self.get_cam_matrix(
@@ -200,9 +203,7 @@ if __name__ == '__main__':
     # create YOLO and RecognizeGesture
     yolo = YOLO(**FLAGS)
     rg = RecognizeGesture(gestures_path)
-    rg.showGesture()
     gesture_ar = GestureAR()
-
     # create OpenGL
-    openGL = OpenGL()
+    openGL = OpenGL(yolo, rg, gesture_ar)
     openGL.main()
