@@ -10,7 +10,7 @@ import yaml
 import os
 import argparse
 
-from keras.yolo import YOLO
+from kerasyolo3.yolo import YOLO
 from RecognizeGesture import RecognizeGesture
 from ar import GestureAR
 
