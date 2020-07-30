@@ -1,16 +1,18 @@
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
+import cv2
+from PIL import Image
+import numpy as np
 from objloader import *
 import cv2.aruco as aruco
 import yaml
-import cv2
 import os
-from kerasyolo3.yolo import YOLO
-from RecognizeGesture import RecognizeGesture
 import argparse
+
+from yolo import YOLO
+from RecognizeGesture import RecognizeGesture
 from ar import GestureAR
-import numpy as np
 
 
 class OpenGL():
