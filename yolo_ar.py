@@ -10,7 +10,7 @@ import yaml
 import os
 import argparse
 
-from yolo import YOLO
+from kerasyolo3.yolo import YOLO
 from RecognizeGesture import RecognizeGesture
 from ar import GestureAR
 
@@ -104,7 +104,7 @@ class OpenGL():
 
         # aruco settings
         aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
-        result, mClass, mBox = self.yolo.detect_image(image)
+        result, mClass, mBox = yolo.detect_image(image)
         if mClass is not None:
             cv2.rectangle(result, (mBox[1], mBox[0]),
                           (mBox[3], mBox[2]), (0, 0, 255))
