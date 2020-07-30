@@ -15,10 +15,10 @@ class GestureAR():
         y = (top + bottom) / 2
         _image = Image.fromarray(image)
 
-        if gesture_name == 2 and not self.flag:
+        if gesture_name == 'moveAR' and not self.flag:
             _image.paste(self.qr, (int(x), int(y)))
             self.flag = True
-        elif gesture_name == 3 and self.flag:
+        elif gesture_name == 'putAR' and self.flag:
             self.position = (x, y)
             self.flag = False
         elif gesture_name == 4:
