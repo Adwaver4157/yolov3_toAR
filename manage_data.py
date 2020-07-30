@@ -15,7 +15,7 @@ def make_image():
     class_image_path = os.path.join(project_name, "Images", class_name)
     class_annotation_path = os.path.join(
         project_name, "Annotation", class_name)
-    cap = cv2.VideoCapture("/dev/video1", cv2.CAP_V4L2)
+    cap = cv2.VideoCapture("/dev/video0", cv2.CAP_V4L2)
     if cap.isOpened():
         print("successfully opened")
         print("make "+project_name+'/'+class_name)

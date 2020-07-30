@@ -22,7 +22,7 @@ class OpenGL():
                                [1.0, 1.0, 1.0, 1.0]])
 
     def __init__(self):
-        self.cap = cv2.VideoCapture(0)
+        self.cap = cv2.VideoCapture('/dev/video0', cv2.CAP_V4L2)
         self.object = None
         self.texture_background = None
 
