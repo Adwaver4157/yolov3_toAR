@@ -133,7 +133,7 @@ class OpenGL():
             glCallList(self.object.gl_list)
             glPopMatrix()
         # optional(yolo)
-        cv2.imshow("cv2 frame", image)
+        cv2.imshow("cv2 frame", result)
         cv2.waitKey(1)
 
     def draw_background(self):
