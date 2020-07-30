@@ -42,9 +42,9 @@ class RecognizeGesture:
     def patternMatch(self):
         for ges in self.dict:
             flag = False
-            length = len(self.arr[ges])//2
+            length = len(self.dict[ges])//2
             for i in range(length):
-                flag |= (self.dict[ges][i] == self.arr[-length+i])
+                flag &= (self.dict[ges][2*i:2*(i+1)] == self.arr[-length+i])
             if flag:
                 return ges
         return None
