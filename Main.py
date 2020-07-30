@@ -20,7 +20,7 @@ import argparse
 
 
 def main():
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture('/dev/video0', cv2.CAP_V4L2)
     if cap.isOpened():
         while True:
             _, frame = cap.read()
