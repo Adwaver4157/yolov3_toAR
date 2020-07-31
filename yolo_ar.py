@@ -108,10 +108,12 @@ class OpenGL():
         if mClass is not None:
             if mClass == 'paper':
                 mClass_num = 1
+            elif mClass == 'rock':
+                mClass_num = 2
         else:
             mClass_num = None
         gesture_name = self.rg.recognizeGesture(result, mBox, mClass_num, mScore)
-        print("Gesture:"+gesture_name, end='\n\n')
+        print("Gesture:"+str(gesture_name), end='\n\n')
         if gesture_name is not None:
             image = self.gesture_ar.fix_render(image)
             image = self.gesture_ar.operate_ar(image, mBox, gesture_name)
