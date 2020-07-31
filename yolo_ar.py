@@ -108,6 +108,8 @@ class OpenGL():
         if mClass is not None:
             if mClass == 'paper':
                 mClass_num = 1
+        else:
+            mClass_num = 0
         gesture_name = self.rg.recognizeGesture(result, mBox, mClass_num, mScore)
         print("Gesture:"+gesture_name, end='\n\n')
         if gesture_name is not None:
