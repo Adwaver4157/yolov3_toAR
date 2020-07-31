@@ -226,7 +226,7 @@ class YOLO(object):
         end = timer()
         print(end - start)
 
-        return image, m_class, m_box                                  # 通常と異なるコード
+        return image, m_class, m_box, max_score  # 通常と異なるコード
 
     def close_session(self):
         self.sess.close()

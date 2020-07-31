@@ -28,13 +28,13 @@ def main():
 
             # # # # # # # your process # # # # # # #
 
-            result, mClass, mBox = yolo.detect_image(frame)
+            result, mClass, mBox, mScore = yolo.detect_image(frame)
 
             if mClass is not None:
                 cv2.rectangle(result, (mBox[1], mBox[0]),
                               (mBox[3], mBox[2]), (0, 0, 255))
 
-            gesture_name = rg.recognizeGesture(result, mBox, mClass)
+            gesture_name = rg.recognizeGesture(result, mBox, mClass, mScore)
 
             if gesture_name is not None:
                 print(gesture_name)
