@@ -20,20 +20,22 @@ class RecognizeGesture:
             self.dict[name] = list(map(int, definition))
 
     def recognizeGesture(self, image, box, mClass, score):
+        if mClass is None:
+            return None
         self.step += 1
         h, w = image.shape[0], image.shape[1]
         # ↓試験導入
-        """
+
         print(box)
         # 大きさチェック
         x, y = box[2]-box[0], box[3]-box[1]
         if max(x, y)/min(x, y) > 3 or max(x, y) > max(h//2, w//2):
             mClass = None
         # 可能性チェック
-        if self.step-self.criteria[2] > 10:
-            self.criteria = [None, self.step]
+        if self.step-self.criteria[1] > 10:
+            self.criteria = [None, self.step, 0]
         mClass = self.checkClass(box, mClass, score)
-        """
+
         if mClass is None:
             return None
 
@@ -78,6 +80,7 @@ class RecognizeGesture:
             return None
         else:
             dice = self.calcDice(box, self.criteria[0])
+            print(dice)
             if dice < 0.5:  # 要調整
                 return None
             else:
@@ -88,7 +91,7 @@ class RecognizeGesture:
                         self.criteria = [box, self.step, self.criteria[2]-1]
                 return mClass
 
-    def calcDice(box, box2):
+    def calcDice(self, box, box2):
         h = max(min(box[2], box2[2])-max(box[0], box2[0]), 0)
         w = max(min(box[3], box2[3])-max(box[1], box2[1]), 0)
         s1 = (box[2]-box[0])*(box[3]-box[1])

@@ -147,9 +147,9 @@ class YOLO(object):
                 K.learning_phase(): 0
             })
         pre_end = timer()
-        print("predict", int((pre_end - pre_start) * 1000) / 1000, "[s]")
+        print("Predict Time:", int((pre_end - pre_start) * 1000) / 1000, "[s]")
 
-        print('Found {} boxes for {}'.format(len(out_boxes), 'img'))
+        # print('Found {} boxes for {}'.format(len(out_boxes), 'img'))
 
         max_score = 0
         m_class = None
@@ -222,9 +222,6 @@ class YOLO(object):
             del draw
         # PILをndarrayに直す
         image = np.asarray(image)
-
-        end = timer()
-        print(end - start)
 
         return image, m_class, m_box, max_score  # 通常と異なるコード
 

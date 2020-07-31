@@ -111,7 +111,7 @@ class OpenGL():
             if mClass == 'paper':
                 mClass = 1
         gesture_name = self.rg.recognizeGesture(result, mBox, mClass, mScore)
-        print(gesture_name)
+        print("Gesture:"+gesture_name, end='\n\n')
         if gesture_name is not None:
             image = self.gesture_ar.fix_render(image)
             image = self.gesture_ar.operate_ar(image, mBox, gesture_name)
