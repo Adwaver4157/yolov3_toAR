@@ -106,11 +106,9 @@ class OpenGL():
         aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
         result, mClass, mBox, mScore = yolo.detect_image(image)
         if mClass is not None:
-            cv2.rectangle(result, (mBox[1], mBox[0]),
-                          (mBox[3], mBox[2]), (0, 0, 255))
             if mClass == 'paper':
-                mClass = 1
-        gesture_name = self.rg.recognizeGesture(result, mBox, mClass, mScore)
+                mClass_num = 1
+        gesture_name = self.rg.recognizeGesture(result, mBox, mClass_num, mScore)
         print("Gesture:"+gesture_name, end='\n\n')
         if gesture_name is not None:
             image = self.gesture_ar.fix_render(image)
@@ -138,6 +136,8 @@ class OpenGL():
             glCallList(self.object.gl_list)
             glPopMatrix()
         # optional(yolo)
+        if mClass is not None:
+            self.drowRectangle(image, mBox, mClass)
         cv2.imshow("cv2 frame", image)
         cv2.waitKey(1)
 
@@ -152,6 +152,16 @@ class OpenGL():
         glTexCoord2f(0.0, 0.0)
         glVertex3f(-4.0, 3.0, 0.0)
         glEnd()
+
+    def drowRectangle(self, image, box, mClass):
+        if mClass == 'paper':
+            color = (0, 0, 255)
+        elif mClass == 'rock':
+            color = (0, 255, 0)
+        else:
+            pass
+        cv2.rectangle(image, (box[1], box[0]), (box[3], box[2]), color)
+        cv2.putText(image, mClass, (0, 50), cv2.FONT_HERSHEY_PLAIN, 4, (255, 0, 0), 5, 4)
 
     def ex(self):
         if cv2.waitKey(1) & 0xFF == ord('q'):
