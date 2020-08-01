@@ -150,13 +150,13 @@ class OpenGL():
     def draw_background(self):
         glBegin(GL_QUADS)
         glTexCoord2f(0.0, 1.0)
-        glVertex3f(-4.0, -3.0, 0.0)
-        glTexCoord2f(1.0, 1.0)
         glVertex3f(4.0, -3.0, 0.0)
+        glTexCoord2f(1.0, 1.0)
+        glVertex3f(-4.0, -3.0, 0.0)
         glTexCoord2f(1.0, 0.0)
-        glVertex3f(4.0, 3.0, 0.0)
-        glTexCoord2f(0.0, 0.0)
         glVertex3f(-4.0, 3.0, 0.0)
+        glTexCoord2f(0.0, 0.0)
+        glVertex3f(4.0, 3.0, 0.0)
         glEnd()
 
     def drowRectangle(self, image, box, mClass):
