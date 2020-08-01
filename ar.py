@@ -15,7 +15,7 @@ class GestureAR():
         y = (top + bottom) / 2 + 40
         _image = Image.fromarray(image)
 
-        if gesture_name == 'moveAR' and not self.flag:  # trace mode
+        if gesture_name == 'moveAR' and not self.flag and self.position is None:  # trace mode
             _image.paste(self.qr, (int(x), int(y)))
             self.flag = True
 
