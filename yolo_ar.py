@@ -111,7 +111,7 @@ class OpenGL():
                 mClass_num = 1
             elif mClass == 'rock':
                 mClass_num = 2
-            image = self.gesture_ar.trace_render(image, mBox)
+            image = self.gesture_ar.trace_render(image, mBox, mClass_num)
         else:
             mClass_num = None
         gesture_name = self.rg.recognizeGesture(result, mBox, mClass_num, mScore)
