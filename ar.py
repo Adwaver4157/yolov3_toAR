@@ -12,7 +12,7 @@ class GestureAR():
     def operate_ar(self, image, box, gesture_name):
         top, left, bottom, right = box
         x = (left + right) / 2
-        y = (top + bottom) / 2
+        y = (top + bottom) / 2 + 40
         _image = Image.fromarray(image)
 
         if gesture_name == 'moveAR' and not self.flag:  # trace mode
@@ -31,7 +31,7 @@ class GestureAR():
         _image = Image.fromarray(image)
         top, left, bottom, right = box
         x = (left + right) / 2
-        y = (top + bottom) / 2
+        y = (top + bottom) / 2 + 40
 
         if class_num == 1 and self.flag:
             _image.paste(self.qr, (int(x), int(y)))
