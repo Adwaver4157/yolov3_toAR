@@ -119,7 +119,6 @@ class YOLO(object):
         return boxes, scores, classes
 
     def detect_image(self, image):
-        start = timer()
         if type(image) is np.ndarray:     # もしndarrayだったらPILに直す
             image = Image.fromarray(image)
 

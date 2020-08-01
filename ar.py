@@ -15,14 +15,30 @@ class GestureAR():
         y = (top + bottom) / 2
         _image = Image.fromarray(image)
 
-        if gesture_name == 'moveAR' and not self.flag:
+        if gesture_name == 'moveAR' and not self.flag:  # trace mode
             _image.paste(self.qr, (int(x), int(y)))
             self.flag = True
-        elif gesture_name == 'putAR' and self.flag:
+
+        elif gesture_name == 'resetAR' and not self.flag:  # reset mode
+            self.position = None
+        else:
+            return image
+
+        image = np.asarray(_image)
+        return image
+
+    def trace_render(self, image, box, class_num):
+        _image = Image.fromarray(image)
+        top, left, bottom, right = box
+        x = (left + right) / 2
+        y = (top + bottom) / 2
+
+        if class_num == 1 and self.flag:
+            _image.paste(self.qr, (int(x), int(y)))
+        elif class_num == 2 and self.flag:  # fix mode
+            _image.paste(self.qr, (int(x), int(y)))
             self.position = (x, y)
             self.flag = False
-        elif gesture_name == 4:
-            self.position = None
         else:
             return image
 

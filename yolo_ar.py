@@ -61,7 +61,7 @@ class OpenGL():
         glEnable(GL_COLOR_MATERIAL)
 
         # load 3D object
-        File = 'Sinbad_4_000001.obj'
+        File = 'tomato/tomato.obj'
         self.object = OBJ(File, swapyz=True)
 
         # assign texture
@@ -105,17 +105,18 @@ class OpenGL():
         # aruco settings
         aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
         result, mClass, mBox, mScore = yolo.detect_image(image)
+        image = self.gesture_ar.fix_render(image)
         if mClass is not None:
             if mClass == 'paper':
                 mClass_num = 1
             elif mClass == 'rock':
                 mClass_num = 2
+            image = self.gesture_ar.trace_render(image, mBox)
         else:
             mClass_num = None
         gesture_name = self.rg.recognizeGesture(result, mBox, mClass_num, mScore)
-        print("Gesture:"+str(gesture_name), end='\n\n')
+        print("Gesture:" + str(gesture_name), end='\n\n')
         if gesture_name is not None:
-            image = self.gesture_ar.fix_render(image)
             image = self.gesture_ar.operate_ar(image, mBox, gesture_name)
         ####
 
@@ -137,6 +138,7 @@ class OpenGL():
 
             glPushMatrix()
             glLoadMatrixd(view_matrix)
+            glScaled(0.05, 0.05, 0.05)
             glCallList(self.object.gl_list)
             glPopMatrix()
         # optional(yolo)
