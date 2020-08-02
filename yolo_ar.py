@@ -134,7 +134,7 @@ class OpenGL():
 
             glPushMatrix()
             glLoadMatrixd(view_matrix)
-            glScaled(0.05, 0.05, 0.05)
+            glScaled(0.1, 0.1, 0.1)
             glCallList(self.object.gl_list)
             glPopMatrix()
         # optional(yolo)
