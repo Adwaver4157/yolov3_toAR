@@ -114,7 +114,8 @@ class OpenGL():
                 position = self.gesture_ar.trace_render(mBox, mClass_num)
         else:
             mClass_num = None
-        gesture_name = self.rg.recognizeGesture(result, mBox, mClass_num, mScore)
+        gesture_name = self.rg.recognizeGesture(
+            result, mBox, mClass_num, mScore)
         print("Gesture:" + str(gesture_name), end='\n\n')
         if gesture_name is not None:
             position = self.gesture_ar.operate_ar(mBox, gesture_name)
@@ -126,8 +127,10 @@ class OpenGL():
             rmtx = cv2.Rodrigues(rvecs)[0]
 
             view_matrix = np.array([[rmtx[0][0], rmtx[0][1], rmtx[0][2], tvecs[0][0][0]],
-                                    [rmtx[1][0], rmtx[1][1], rmtx[1][2], tvecs[0][0][1]],
-                                    [rmtx[2][0], rmtx[2][1], rmtx[2][2], tvecs[0][0][2]],
+                                    [rmtx[1][0], rmtx[1][1], rmtx[1]
+                                        [2], tvecs[0][0][1]],
+                                    [rmtx[2][0], rmtx[2][1], rmtx[2]
+                                        [2], tvecs[0][0][2]],
                                     [0.0, 0.0, 0.0, 1.0]])
             view_matrix = view_matrix * self.INVERSE_MATRIX
             view_matrix = np.transpose(view_matrix)
@@ -162,8 +165,10 @@ class OpenGL():
             color = (0, 255, 0)
         else:
             pass
-        cv2.rectangle(image, (box[1], box[0]), (box[3], box[2]), color)
-        cv2.putText(image, mClass, (0, 50), cv2.FONT_HERSHEY_PLAIN, 4, (255, 0, 0), 5, 4)
+        cv2.rectangle(image, (box[1], box[0]),
+                      (box[3], box[2]), color, thickness=3)
+        cv2.putText(image, mClass, (0, 50),
+                    cv2.FONT_HERSHEY_PLAIN, 4, (255, 0, 0), 5, 4)
 
     def ex(self):
         if cv2.waitKey(1) & 0xFF == ord('q'):
