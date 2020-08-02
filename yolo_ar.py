@@ -106,28 +106,25 @@ class OpenGL():
         # aruco settings
         aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
         result, mClass, mBox, mScore = yolo.detect_image(image)
-        image = self.gesture_ar.fix_render(image)
+        image, _position = self.gesture_ar.fix_render(image)
         if mClass is not None:
             if mClass == 'paper':
                 mClass_num = 1
             elif mClass == 'rock':
                 mClass_num = 2
-            image = self.gesture_ar.trace_render(image, mBox, mClass_num)
+            image, _position = self.gesture_ar.trace_render(image, mBox, mClass_num)
         else:
             mClass_num = None
         gesture_name = self.rg.recognizeGesture(result, mBox, mClass_num, mScore)
         print("Gesture:" + str(gesture_name), end='\n\n')
         if gesture_name is not None:
-            image = self.gesture_ar.operate_ar(image, mBox, gesture_name)
+            image, _position = self.gesture_ar.operate_ar(image, mBox, gesture_name)
         ####
 
         height, width, channel = image.shape
         corners, ids, _ = aruco.detectMarkers(image, aruco_dict)
-        if ids is not None and corners is not None:
-            top, left, bottom, right = mBox
-            x = (left + right) / 2
-            y = (top + bottom) / 2
-            position = np.array([[[x - 50, y - 50], [x + 50, y - 50], [x + 50, y + 50], [x - 50, y + 50]]]).astype(np.float32)
+        if _position is not None:
+            position = _position
             rvecs, tvecs, _objpoints = aruco.estimatePoseSingleMarkers(
                 position, 0.6, self.cam_matrix, self.dist_coefs)
             rmtx = cv2.Rodrigues(rvecs)[0]
@@ -136,7 +133,6 @@ class OpenGL():
                                     [rmtx[1][0], rmtx[1][1], rmtx[1][2], tvecs[0][0][1]],
                                     [rmtx[2][0], rmtx[2][1], rmtx[2][2], tvecs[0][0][2]],
                                     [0.0, 0.0, 0.0, 1.0]])
-            # print(view_matrix)
             view_matrix = view_matrix * self.INVERSE_MATRIX
             view_matrix = np.transpose(view_matrix)
 

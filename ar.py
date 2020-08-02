@@ -13,45 +13,46 @@ class GestureAR():
         top, left, bottom, right = box
         x = (left + right) / 2
         y = (top + bottom) / 2 + 40
-        _image = Image.fromarray(image)
 
         if gesture_name == 'moveAR' and not self.flag and self.position is None:  # trace mode
-            _image.paste(self.qr, (int(x), int(y)))
+            render_position = np.array([[[x - 50, y - 50], [x + 50, y - 50], [x + 50, y + 50], [x - 50, y + 50]]]
+                                       ).astype(np.float32)
             self.flag = True
 
         elif gesture_name == 'resetAR' and not self.flag:  # reset mode
             self.position = None
+            render_position = None
         else:
-            return image
+            return image, None
 
-        image = np.asarray(_image)
-        return image
+        return image, render_position
 
     def trace_render(self, image, box, class_num):
-        _image = Image.fromarray(image)
         top, left, bottom, right = box
         x = (left + right) / 2
         y = (top + bottom) / 2 + 40
 
         if class_num == 1 and self.flag:
-            _image.paste(self.qr, (int(x), int(y)))
+            render_position = np.array([[[x - 50, y - 50], [x + 50, y - 50], [x + 50, y + 50], [x - 50, y + 50]]]
+                                       ).astype(np.float32)
         elif class_num == 2 and self.flag:  # fix mode
-            _image.paste(self.qr, (int(x), int(y)))
+            render_position = np.array([[[x - 50, y - 50], [x + 50, y - 50], [x + 50, y + 50], [x - 50, y + 50]]]
+                                       ).astype(np.float32)
             self.position = (x, y)
             self.flag = False
         else:
-            return image
+            return image, None
 
-        image = np.asarray(_image)
-        return image
+        return image, render_position
 
     def fix_render(self, image):
-        _image = Image.fromarray(image)
 
         if self.position is not None:
-            _image.paste(self.qr, (int(self.position[0]), int(self.position[1])))
+            x = self.position[0]
+            y = self.position[1]
+            render_position = np.array([[[x - 50, y - 50], [x + 50, y - 50], [x + 50, y + 50], [x - 50, y + 50]]]
+                                       ).astype(np.float32)
         else:
-            return image
+            return image, None
 
-        image = np.asarray(_image)
-        return image
+        return image, render_position
