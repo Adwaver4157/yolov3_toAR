@@ -124,16 +124,19 @@ class OpenGL():
         height, width, channel = image.shape
         corners, ids, _ = aruco.detectMarkers(image, aruco_dict)
         if ids is not None and corners is not None:
+            top, left, bottom, right = mBox
+            x = (left + right) / 2
+            y = (top + bottom) / 2
+            position = np.array([[[x - 50, y - 50], [x + 50, y - 50], [x + 50, y + 50], [x - 50, y + 50]]]).astype(np.float32)
             rvecs, tvecs, _objpoints = aruco.estimatePoseSingleMarkers(
-                corners[0], 0.6, self.cam_matrix, self.dist_coefs)
+                position, 0.6, self.cam_matrix, self.dist_coefs)
             rmtx = cv2.Rodrigues(rvecs)[0]
 
             view_matrix = np.array([[rmtx[0][0], rmtx[0][1], rmtx[0][2], tvecs[0][0][0]],
-                                    [rmtx[1][0], rmtx[1][1], rmtx[1]
-                                        [2], tvecs[0][0][1]],
-                                    [rmtx[2][0], rmtx[2][1], rmtx[2]
-                                        [2], tvecs[0][0][2]],
+                                    [rmtx[1][0], rmtx[1][1], rmtx[1][2], tvecs[0][0][1]],
+                                    [rmtx[2][0], rmtx[2][1], rmtx[2][2], tvecs[0][0][2]],
                                     [0.0, 0.0, 0.0, 1.0]])
+            # print(view_matrix)
             view_matrix = view_matrix * self.INVERSE_MATRIX
             view_matrix = np.transpose(view_matrix)
 
