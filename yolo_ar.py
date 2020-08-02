@@ -103,28 +103,24 @@ class OpenGL():
 
     def handle_glyphs(self, image):
 
-        # aruco settings
-        aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
         result, mClass, mBox, mScore = yolo.detect_image(image)
-        image, _position = self.gesture_ar.fix_render(image)
+        position = self.gesture_ar.fix_render()
         if mClass is not None:
             if mClass == 'paper':
                 mClass_num = 1
             elif mClass == 'rock':
                 mClass_num = 2
-            image, _position = self.gesture_ar.trace_render(image, mBox, mClass_num)
+            if self.gesture_ar.flag:
+                position = self.gesture_ar.trace_render(mBox, mClass_num)
         else:
             mClass_num = None
         gesture_name = self.rg.recognizeGesture(result, mBox, mClass_num, mScore)
         print("Gesture:" + str(gesture_name), end='\n\n')
         if gesture_name is not None:
-            image, _position = self.gesture_ar.operate_ar(image, mBox, gesture_name)
+            position = self.gesture_ar.operate_ar(mBox, gesture_name)
         ####
 
-        height, width, channel = image.shape
-        corners, ids, _ = aruco.detectMarkers(image, aruco_dict)
-        if _position is not None:
-            position = _position
+        if position is not None:
             rvecs, tvecs, _objpoints = aruco.estimatePoseSingleMarkers(
                 position, 0.6, self.cam_matrix, self.dist_coefs)
             rmtx = cv2.Rodrigues(rvecs)[0]

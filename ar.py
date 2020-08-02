@@ -7,9 +7,8 @@ class GestureAR():
     def __init__(self):
         self.flag = False
         self.position = None
-        self.qr = Image.fromarray(cv2.imread('ar.png'))
 
-    def operate_ar(self, image, box, gesture_name):
+    def operate_ar(self, box, gesture_name):
         top, left, bottom, right = box
         x = (left + right) / 2
         y = (top + bottom) / 2 + 40
@@ -23,11 +22,11 @@ class GestureAR():
             self.position = None
             render_position = None
         else:
-            return image, None
+            return None
 
-        return image, render_position
+        return render_position
 
-    def trace_render(self, image, box, class_num):
+    def trace_render(self, box, class_num):
         top, left, bottom, right = box
         x = (left + right) / 2
         y = (top + bottom) / 2 + 40
@@ -41,11 +40,11 @@ class GestureAR():
             self.position = (x, y)
             self.flag = False
         else:
-            return image, None
+            return None
 
-        return image, render_position
+        return render_position
 
-    def fix_render(self, image):
+    def fix_render(self):
 
         if self.position is not None:
             x = self.position[0]
@@ -53,6 +52,6 @@ class GestureAR():
             render_position = np.array([[[x - 50, y - 50], [x + 50, y - 50], [x + 50, y + 50], [x - 50, y + 50]]]
                                        ).astype(np.float32)
         else:
-            return image, None
+            return None
 
-        return image, render_position
+        return render_position
