@@ -3,6 +3,19 @@
 以下の colab をコピーして学習、テストすることができます
 https://colab.research.google.com/drive/1pi7Iskwi2G_nYMithtQFPoyqWzQ6BFmp?usp=sharing
 
+# YOLO 系のコードに関して
+
+keras 版 YOLOv3 モデルとして著名な以下のコードを改修して使用しています。
+https://github.com/qqwweee/keras-yolo3
+
+# AR 系のコードに関して
+
+以下のコードを使用させていただいています。
+https://github.com/ajaymin28/Aruco_python
+
+yolo_ar.py に関しては各種いじっており、
+objloader や calibration 関連はそのまま使用させてもらってます。
+
 ## ディレクトリ構成
 
 ```
